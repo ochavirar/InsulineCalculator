@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'change_food_dialog.dart';
 
 class BolusFoodItem extends StatefulWidget {
   const BolusFoodItem({super.key});
@@ -8,10 +9,15 @@ class BolusFoodItem extends StatefulWidget {
   State<BolusFoodItem> createState() => _BolusFoodItemState();
 }
 
-void deleteItem(context) {}
-void editItem(context) {
-  //mostrar el dialog de la edicion de la comida
+void openEditDialog(context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return EditFoodDialog();
+      });
 }
+
+void deleteItem(context) {}
 
 class _BolusFoodItemState extends State<BolusFoodItem> {
   @override
@@ -27,7 +33,7 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
         key: const ValueKey(0),
         endActionPane: ActionPane(motion: const ScrollMotion(), children: [
           SlidableAction(
-            onPressed: editItem,
+            onPressed: openEditDialog,
             backgroundColor: Colors.green,
             foregroundColor: Theme.of(context).secondaryHeaderColor,
             icon: Icons.edit,

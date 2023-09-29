@@ -31,7 +31,27 @@ class _BolusFoodState extends State<BolusFood> {
           ],
         ),
         Column(
-          children: [BolusFoodItem(), BolusFoodItem(), BolusFoodItem()],
+          children: [
+            BolusFoodItem(),
+            BolusFoodItem(),
+            BolusFoodItem(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  margin: EdgeInsets.all(14),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.green,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.add),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
         )
       ],
     );
