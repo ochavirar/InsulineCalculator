@@ -21,6 +21,16 @@ class BolusHistoryItem extends StatelessWidget {
   });
 
 
+  //Función para mostrar el desgloce de un bolus en particular 
+  void showDialogHistory(BuildContext context, BolusHistoryItem bolus) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return BolusHistoryDialog(bolus: this);
+    }
+  );
+  }
+
 
   @override
   Widget build(BuildContext context) {
