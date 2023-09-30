@@ -23,15 +23,17 @@ class _BolusCalendarState extends State<BolusCalendar> {
     DateTime.utc(2023,9,28) : [BolusHistoryItem(time: DateTime.utc(2023,9,28,8,5), unitsFood: 2.5, 
       listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.0, glucoseLevel: 100),
       BolusHistoryItem(time: DateTime.utc(2023,9,28,16,10), unitsFood: 2.5, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.5, glucoseLevel: 100),
+      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.5, glucoseLevel: 120),
       BolusHistoryItem(time: DateTime.utc(2023,9,28,18,23), unitsFood: 2.5, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.5, glucoseLevel: 100),
+      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Texto largo para probar overflow 30g", "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g",
+      "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g",], 
+      unitsGlucose: 1.5, glucoseLevel: 130),
       BolusHistoryItem(time: DateTime.utc(2023,9,28,21,10), unitsFood: 2, 
       listFood: ["Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.0, glucoseLevel: 100),
       ],
       
     DateTime.utc(2023,9,26) : [BolusHistoryItem(time: DateTime.utc(2023,9,28,16,10), unitsFood: 2.5, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.5, glucoseLevel: 100),
+      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.5, glucoseLevel: 110),
       BolusHistoryItem(time: DateTime.utc(2023,9,28,21,10), unitsFood: 2, 
       listFood: ["Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.0, glucoseLevel: 100),
       ],
@@ -48,7 +50,6 @@ class _BolusCalendarState extends State<BolusCalendar> {
     super.initState();
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
-    print("Entre");
   }
 
   @override
@@ -73,7 +74,7 @@ class _BolusCalendarState extends State<BolusCalendar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.fromLTRB(10.0,0,10,10),
       child: Column(
         children: [
           TableCalendar(
@@ -107,7 +108,7 @@ class _BolusCalendarState extends State<BolusCalendar> {
             },
           ),
           
-          Divider(thickness: 5, height: 30, color: Theme.of(context).primaryColor),
+          Divider(thickness: 4, height: 15, color: Theme.of(context).primaryColor),
     
           Expanded(
             child: ValueListenableBuilder<List<BolusHistoryItem>>(
@@ -121,7 +122,24 @@ class _BolusCalendarState extends State<BolusCalendar> {
                 );
               }
             )
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 6.0),
+            child: SizedBox(
+              width: 120,
+              height: 40,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 14, color:Colors.white),
+                  backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  )
+                ), onPressed: () {  }, 
+                child: const Text('Regresar',style: TextStyle(fontSize: 14, color:Colors.white)),
+              )
+            ),
+          ),
         ],
       ),
     );

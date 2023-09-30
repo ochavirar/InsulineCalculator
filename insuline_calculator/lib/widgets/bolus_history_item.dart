@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/widgets/bolus_history_dialog.dart';
 import 'package:intl/intl.dart';
 
 
 class BolusHistoryItem extends StatelessWidget {
   final DateTime time;
   final double unitsFood;
-   //Lo mas probable es que se cambie este atributo al saber como se conectara con 
-   //el resto de la aplicación
+   //Lo mas probable es que se cambie este atributo al saber como se conectara con el resto de la aplicación
   final List<String> listFood;
   final double unitsGlucose;
   final double glucoseLevel; 
@@ -57,7 +57,10 @@ class BolusHistoryItem extends StatelessWidget {
                 Expanded(child: Container(),),
                 TextButton(
                   child: const Text('ABRIR'),
-                  onPressed: () {/* ... */},
+                  onPressed: () {
+                    //Viene de bolus_history_dialogue
+                    showDialogHistory(context,this);
+                  },
                 ),
                 const SizedBox(width: 20),
               ],
