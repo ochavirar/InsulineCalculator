@@ -56,6 +56,7 @@ class LogInForm extends StatelessWidget {
                 padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
                 child: ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
                   },
                   child: const Text('Ingresar'),

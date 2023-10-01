@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/screens/edit_profile.dart';
 import 'package:insuline_calculator/widgets/utilities/adaptable_text.dart';
+import 'package:insuline_calculator/widgets/utilities/side_bar.dart';
 
 class MainScreenContainer extends StatelessWidget {
   const MainScreenContainer({super.key});
@@ -29,6 +30,7 @@ class MainScreenScaffold extends StatelessWidget {
           ),
         ],
       ),
+      drawer: const SideBar(),
       body: const SingleChildScrollView(
         child: ContentContainer()
       ),
