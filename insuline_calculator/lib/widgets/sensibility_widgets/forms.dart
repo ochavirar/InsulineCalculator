@@ -68,29 +68,36 @@ class _RangeSliderObjectiveState extends State<RangeSliderObjective> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: MediaQuery.of(context).size.width * 0.1,
-        right: MediaQuery.of(context).size.width * 0.1,
-        top: MediaQuery.of(context).size.width * 0.15,
+    return Container(
+      margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Theme.of(context).secondaryHeaderColor,
       ),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
-              child: Text(widget.title,
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.1,
+          right: MediaQuery.of(context).size.width * 0.1,
+          top: MediaQuery.of(context).size.width * 0.15,
+        ),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
+                child: Text(widget.title,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                  ),
                 ),
               ),
-            ),
-          ), 
-          const RangeSliderTarget(),       
-        ],
+            ), 
+            const RangeSliderTarget(),       
+          ],
+        ),
       ),
     );
   }
@@ -115,48 +122,55 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: MediaQuery.of(context).size.width * 0.1,
-        right: MediaQuery.of(context).size.width * 0.1,
-        top: MediaQuery.of(context).size.width * 0.15,
+    return Container(
+      margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Theme.of(context).secondaryHeaderColor,
       ),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
-              child: Text(
-                widget.title,
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.1,
+          right: MediaQuery.of(context).size.width * 0.1,
+          top: MediaQuery.of(context).size.width * 0.15,
+        ),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
+                child: Text(
+                  widget.title,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: sliderTitles.length,
-            itemBuilder: (context, index) {
-              return const Column(
-                children: [
-                  RangeSliderHours(), // Replace with your custom slider widget
-                ],
-              );
-            },
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                sliderTitles.add(Ranges(0, 23));
-              });
-            },
-            icon: const Icon(Icons.add_circle_outline_rounded),
-          ),
-        ],
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: sliderTitles.length,
+              itemBuilder: (context, index) {
+                return const Column(
+                  children: [
+                    RangeSliderHours(), // Replace with your custom slider widget
+                  ],
+                );
+              },
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  sliderTitles.add(Ranges(0, 23));
+                });
+              },
+              icon: const Icon(Icons.add_circle_outline_rounded),
+            ),
+          ],
+        ),
       ),
     );
   }

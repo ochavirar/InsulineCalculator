@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/screens/edit_profile.dart';
 import 'package:insuline_calculator/widgets/sensibility_widgets/forms.dart';
+import 'package:insuline_calculator/widgets/utilities/side_bar.dart';
 
 class SensibilityContainer extends StatelessWidget {
   const SensibilityContainer({super.key});
@@ -24,6 +25,7 @@ class SensibilityContainer extends StatelessWidget {
           ),
         ],
       ),
+      drawer: const SideBar(),
       body: ListView(
         children:  const [
           RangeSliderCategory(title: "Glucosa"),
