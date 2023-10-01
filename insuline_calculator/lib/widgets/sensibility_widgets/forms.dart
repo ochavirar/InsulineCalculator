@@ -189,21 +189,30 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
   RangeLabels labels = const RangeLabels('0', "23");
   @override
   Widget build(BuildContext context) {
-    return RangeSlider(  
-      divisions: 24,
-      activeColor: Theme.of(context).secondaryHeaderColor,
-      inactiveColor: Theme.of(context).primaryColor,
-      min: 0,
-      max: 23,
-      values: values,
-      labels: labels,
-      onChanged: (value){
-      setState(() {
-        values = value;
-        labels = RangeLabels("${value.start.toInt().toString()}:00", "${value.end.toInt().toString()}:00");
-
-      });
-      }
+    return Row(
+      children: [
+        RangeSlider(  
+          divisions: 24,
+          activeColor: Theme.of(context).secondaryHeaderColor,
+          inactiveColor: Theme.of(context).primaryColor,
+          min: 0,
+          max: 23,
+          values: values,
+          labels: labels,
+          onChanged: (value){
+          setState(() {
+            values = value;
+            labels = RangeLabels("${value.start.toInt().toString()}:00", "${value.end.toInt().toString()}:00");
+          });
+          }
+        ),
+        const Expanded(
+          child: TextField(
+            keyboardAppearance: Brightness.light,
+            keyboardType: TextInputType.number,
+          ),
+        )
+      ],
     );
   }
 }

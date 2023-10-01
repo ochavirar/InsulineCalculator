@@ -11,10 +11,9 @@ class SideBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SidebarX(
       theme: SidebarXTheme(
-        width: MediaQuery.of(context).size.width * 0.3,
-        hoverColor: Theme.of(context).secondaryHeaderColor,
+        width: MediaQuery.of(context).size.width * 0.3
       ),
-      controller: SidebarXController(selectedIndex: 0),
+      controller: SidebarXController(selectedIndex: 0, extended: true),
       items: [
         SidebarXItem(
           onTap: () {
