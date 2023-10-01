@@ -4,8 +4,6 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:insuline_calculator/widgets/bolus_history_item.dart';
 
 
-
-
 class BolusCalendar extends StatefulWidget {
   const BolusCalendar({super.key});
   @override

@@ -30,12 +30,12 @@ class _RegisterFoodState extends State<RegisterFood> {
 
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.fromLTRB(0,20.0,0,15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //Text field generico que acepta el controllador para leer el input
-              DynamicTextField(myController: controllerNombre,height: 50, width: 200, textInputType: TextInputType.multiline, 
+              DynamicTextField(myController: controllerNombre,height: 50, width: 280, textInputType: TextInputType.multiline, 
                 label: "Nombre del alimento",maxlines: 1,minlines: 1,), 
               Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -52,8 +52,8 @@ class _RegisterFoodState extends State<RegisterFood> {
                 ),
               ),
               SizedBox(
-                width: 160,
-                height: 35,
+                width: 170,
+                height:40,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20, color:Colors.white),
@@ -67,11 +67,11 @@ class _RegisterFoodState extends State<RegisterFood> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0,20.0,0,0),
-                child: DynamicTextField(myController: controllerDescripcion, height: 95, width: 260, textInputType: TextInputType.multiline, 
+                child: DynamicTextField(myController: controllerDescripcion, height: 95, width: 300, textInputType: TextInputType.multiline, 
                   label: "Descripción del alimento", maxlines: 3, minlines: 3),
               ), 
               Padding(
-                padding: const EdgeInsets.fromLTRB(50,0,50,2),
+                padding: const EdgeInsets.fromLTRB(50,10,50,2),
                 child: Row(children: [
                   Expanded(child: 
                       Container(
@@ -121,7 +121,7 @@ class _RegisterFoodState extends State<RegisterFood> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 26.0),
-                        child: DynamicTextField(myController: controllerCarbs, height: 50, width: 120, textInputType: TextInputType.number,
+                        child: DynamicTextField(myController: controllerCarbs, height: 60, width: 120, textInputType: TextInputType.number,
                         label: "Cantidad", maxlines: 1, minlines: 1),
                       ),
                       ],)
