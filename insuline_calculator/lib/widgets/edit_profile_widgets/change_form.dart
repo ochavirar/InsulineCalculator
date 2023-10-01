@@ -31,13 +31,16 @@ class NameChangeForm extends StatelessWidget {
                   hintText: 'Ingresa tu nombre',
                 ),
               ),
-              MaterialButton(
-                color: Theme.of(context).primaryColor,
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MaterialButton(
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: const Text('Cambiar'),
                 ),
-                child: const Text('Cambiar'),
               ),
             ],
           ),
