@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dynamic_text_field.dart';
+import 'package:insuline_calculator/classes/food.dart';
 
 class EditFoodDialog extends StatefulWidget {
-  const EditFoodDialog({super.key});
+  const EditFoodDialog({super.key, required this.food, required this.edit});
+
+  final Food food;
+  final bool edit;
 
   @override
   State<EditFoodDialog> createState() => _EditFoodDialogState();
@@ -16,8 +20,8 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
     return AlertDialog(
       title: Center(
         child: Text(
-          'Editar Cantidad',
-          style: TextStyle(fontSize: 23),
+          widget.edit ? 'Editar Cantidad' : 'Definir Cantidad',
+          style: const TextStyle(fontSize: 23),
         ),
       ),
       content: Column(
@@ -27,7 +31,7 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'NombreAlimento',
+                widget.food.title,
                 style: TextStyle(fontSize: 16),
               )
             ],
@@ -38,7 +42,7 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
               borderRadius: BorderRadius.circular(10),
               child: Image(
                 image: NetworkImage(
-                  'https://www.thewholesomedish.com/wp-content/uploads/2019/06/The-Best-Classic-Tacos-550.jpg',
+                  widget.food.imageUrl,
                 ),
                 height: 200,
                 width: 200,
@@ -59,7 +63,7 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
               Container(
                   margin: EdgeInsets.only(right: 20),
                   child: Text(
-                    'Units',
+                    widget.food.unit,
                     style: TextStyle(fontSize: 15),
                   ))
             ],

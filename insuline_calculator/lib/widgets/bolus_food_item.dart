@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'change_food_dialog.dart';
+import 'package:insuline_calculator/classes/food_detail.dart';
 
 class BolusFoodItem extends StatefulWidget {
-  const BolusFoodItem({super.key});
+  const BolusFoodItem({super.key, required this.detalle});
+
+  final FoodDetail detalle;
 
   @override
   State<BolusFoodItem> createState() => _BolusFoodItemState();
 }
 
-void openEditDialog(context) {
+void openEditDialog(context, FoodDetail detalle) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
-        return EditFoodDialog();
+        return EditFoodDialog(food: detalle.alimento, edit: true);
       });
 }
 
@@ -33,7 +36,9 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
         key: const ValueKey(0),
         endActionPane: ActionPane(motion: const ScrollMotion(), children: [
           SlidableAction(
-            onPressed: openEditDialog,
+            onPressed: (context) {
+              openEditDialog(context, widget.detalle);
+            },
             backgroundColor: Colors.green,
             foregroundColor: Theme.of(context).secondaryHeaderColor,
             icon: Icons.edit,
@@ -47,32 +52,34 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
         ]),
         child: Row(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 6, right: 20, top: 5, bottom: 5),
-              child: Image(
-                image: NetworkImage(
-                    'https://www.thewholesomedish.com/wp-content/uploads/2019/06/The-Best-Classic-Tacos-550.jpg'),
-                height: 63,
-                width: 63,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image(
+                  image: NetworkImage(widget.detalle.alimento.imageUrl),
+                  height: 63,
+                  width: 63,
+                ),
               ),
             ),
-            const Column(
+            Column(
               children: [
                 Text(
-                  'Zucaritas',
+                  widget.detalle.alimento.title,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '30 grams',
+                  widget.detalle.quantity.toString(),
                   style: TextStyle(),
                 )
               ],
             ),
             Expanded(child: Container()),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(right: 10),
               child: Text(
-                '27 Carbs',
+                '${(widget.detalle.quantity * widget.detalle.alimento.basecarbs) / widget.detalle.alimento.baseServingSize} Carbs',
                 style: TextStyle(fontSize: 18),
               ),
             )

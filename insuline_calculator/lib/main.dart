@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'screens/main_bolus.dart';
+import 'package:provider/provider.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (_) => BolusProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

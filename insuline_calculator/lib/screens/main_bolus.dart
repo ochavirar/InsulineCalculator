@@ -10,8 +10,9 @@ class MainBolusScreen extends StatefulWidget {
 }
 
 class _MainBolusScreenState extends State<MainBolusScreen> {
-  int _selectedPage = 1;
-  final List<Widget> _pages = [const BolusFood(), const BolusData()];
+  int _selectedPage = 0;
+
+  final List<Widget> _pages = [BolusFood(), BolusData()];
 
   @override
   Widget build(BuildContext context) {

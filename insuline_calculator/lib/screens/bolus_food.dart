@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:insuline_calculator/widgets/bolus_food_item.dart';
+
+import 'package:provider/provider.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
+import 'food_list.dart';
 
 class BolusFood extends StatefulWidget {
   const BolusFood({super.key});
@@ -24,33 +27,40 @@ class _BolusFoodState extends State<BolusFood> {
                   color: Theme.of(context).splashColor,
                   borderRadius: BorderRadius.circular(5)),
               child: Text(
-                'Total de alimentos: ' + 'xnum',
-                style: TextStyle(fontSize: 20),
+                'Total de alimentos: ${context.watch<BolusProvider>().getCarbSum()}',
+                style: const TextStyle(fontSize: 20),
               ),
             ),
           ],
         ),
-        Column(
+        Expanded(
+          child: ListView.builder(
+            itemCount: context.watch<BolusProvider>().boloTest.foodList.length,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (BuildContext context, int index) {
+              return BolusFoodItem(
+                  detalle:
+                      context.watch<BolusProvider>().boloTest.foodList[index]);
+            },
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            BolusFoodItem(),
-            BolusFoodItem(),
-            BolusFoodItem(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  margin: EdgeInsets.all(14),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.green,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.add),
-                    ),
-                  ),
+            Container(
+              margin: EdgeInsets.all(14),
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.green,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => FoodList()));
+                  },
+                  icon: Icon(Icons.add),
                 ),
-              ],
-            )
+              ),
+            ),
           ],
         )
       ],
