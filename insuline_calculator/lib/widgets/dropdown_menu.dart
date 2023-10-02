@@ -25,7 +25,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
     return DropdownMenu<String>(
         width: 120,
         menuHeight: 200,
-        initialSelection: 'g',
+        initialSelection: units[0],
         controller: controllerUnits,
         dropdownMenuEntries: unitEntries,
         onSelected: (String? unit) {

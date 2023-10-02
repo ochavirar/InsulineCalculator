@@ -24,7 +24,7 @@ class DynamicTextField extends StatelessWidget {
                     maxLines: maxlines,
                     decoration:  InputDecoration(
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue)
+                        borderSide: BorderSide(color: Theme.of(context).primaryColor)
                       ),
                       label:  Center(child: Text(label)),
                       alignLabelWithHint: true,

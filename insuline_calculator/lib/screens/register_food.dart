@@ -24,7 +24,7 @@ class _RegisterFoodState extends State<RegisterFood> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
 
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Center(child: Text("Registro de un alimento", style:TextStyle(color: Colors.white))),
       ),
 
@@ -57,7 +57,7 @@ class _RegisterFoodState extends State<RegisterFood> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20, color:Colors.white),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)
                     )
@@ -133,7 +133,7 @@ class _RegisterFoodState extends State<RegisterFood> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20, color:Colors.white),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)
                     )

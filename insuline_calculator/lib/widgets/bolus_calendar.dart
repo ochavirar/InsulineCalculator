@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/map_bolus.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:insuline_calculator/widgets/bolus_history_item.dart';
 
@@ -17,30 +18,12 @@ class _BolusCalendarState extends State<BolusCalendar> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   //Valores hardcodeados para mostrar los eventos del calendario
-  Map<DateTime, List<BolusHistoryItem>>  events = {
-    DateTime.utc(2023,9,28) : [BolusHistoryItem(time: DateTime.utc(2023,9,28,8,5), unitsFood: 2.5, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.0, glucoseLevel: 100),
-      BolusHistoryItem(time: DateTime.utc(2023,9,28,16,10), unitsFood: 2.5, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.5, glucoseLevel: 120),
-      BolusHistoryItem(time: DateTime.utc(2023,9,28,18,23), unitsFood: 2.5, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Texto largo para probar overflow 30g", "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g",
-      "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g",], 
-      unitsGlucose: 1.5, glucoseLevel: 130),
-      BolusHistoryItem(time: DateTime.utc(2023,9,28,21,10), unitsFood: 2, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.0, glucoseLevel: 100),
-      ],
-      
-    DateTime.utc(2023,9,26) : [BolusHistoryItem(time: DateTime.utc(2023,9,28,16,10), unitsFood: 2.5, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.5, glucoseLevel: 110),
-      BolusHistoryItem(time: DateTime.utc(2023,9,28,21,10), unitsFood: 2, 
-      listFood: ["Zucaritas 30g", "Zucaritas 30g"], unitsGlucose: 1.0, glucoseLevel: 100),
-      ],
-  };
+
 
   //Función para recuperar los eventos del mapa según una llave (día) otorgada.
   List<BolusHistoryItem> _getEventsForDay(DateTime day) {
 
-    return events[day] ?? [];
+    return  MapEvents().events[day] ?? [];
   }
 
   @override 
@@ -129,7 +112,7 @@ class _BolusCalendarState extends State<BolusCalendar> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 14, color:Colors.white),
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                   )

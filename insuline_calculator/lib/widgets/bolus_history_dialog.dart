@@ -10,7 +10,7 @@ class BolusHistoryDialog extends StatelessWidget {
   });
 
   final BolusHistoryItem bolus;
-  DateFormat dateFormat = DateFormat('dd-MM-yyyy h:mm a');
+  DateFormat dateFormat = DateFormat('dd/MM/yyyy h:mm a');
 
 
   @override

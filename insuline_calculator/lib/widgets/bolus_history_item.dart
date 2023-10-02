@@ -35,7 +35,7 @@ class BolusHistoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double unitsTotal = unitsFood + unitsGlucose;
-    DateFormat dateFormat = DateFormat('dd-MM-yyyy h:mm a');
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy h:mm a');
     String formattedTime = dateFormat.format(time);
 
     return Card(

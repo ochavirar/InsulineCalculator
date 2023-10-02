@@ -15,7 +15,7 @@ class _BolusHistoryState extends State<BolusHistory> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Center(child: Text("Historial Bolus", style:TextStyle(color: Colors.white))),
       ),
 

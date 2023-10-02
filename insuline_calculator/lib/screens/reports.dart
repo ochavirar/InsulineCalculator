@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/widgets/barchart_reports.dart';
+import 'package:insuline_calculator/widgets/month_picker_dialog.dart';
+import 'package:insuline_calculator/widgets/report_table.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/provider_reports.dart';
-import 'package:insuline_calculator/widgets/week_picker.dart';
+import 'package:insuline_calculator/widgets/week_picker_dialog.dart';
 
 class Reports extends StatefulWidget {
   const Reports({super.key});
@@ -12,12 +15,21 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportsState extends State<Reports> {
-  DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+  DateFormat dateFormat = DateFormat('dd/MM/yyyy');
   void showWeekPicker(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return WeekPicker();
+    }
+  );
+  }
+
+  void showMonthPicker(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return MonthPicker();
     }
   );
   }
@@ -28,7 +40,7 @@ class _ReportsState extends State<Reports> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
 
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Center(child: Text("Reportes", style:TextStyle(color: Colors.white))),
       ),
 
@@ -46,8 +58,8 @@ class _ReportsState extends State<Reports> {
                       child: Column(
                         children: [
                         Padding(
-                          padding: const EdgeInsets.only(top:8.0),
-                          child: Text("Semanal:"),
+                          padding: const EdgeInsets.only(top:5.0),
+                          child: Text("Semanal:",style:TextStyle(fontSize: 16)),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8),
@@ -57,7 +69,7 @@ class _ReportsState extends State<Reports> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 textStyle: const TextStyle(fontSize: 15, color:Colors.white),
-                                backgroundColor: Colors.blue,
+                                backgroundColor: Theme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5)
                                 )
@@ -77,8 +89,8 @@ class _ReportsState extends State<Reports> {
                       child: Column(
                         children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text("Mensual:"),
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Text("Mensual:",style:TextStyle(fontSize: 16)),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -88,11 +100,13 @@ class _ReportsState extends State<Reports> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 textStyle: const TextStyle(fontSize: 15, color:Colors.white),
-                                backgroundColor: Colors.blue,
+                                backgroundColor: Theme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5)
                                 )
-                              ), onPressed: () {  }, 
+                              ), onPressed: () {
+                                showMonthPicker(context);
+                              }, 
                               child: const Text('Elegir mes',style: TextStyle(fontSize: 15, color:Colors.white)),
                             )
                           ),
@@ -103,19 +117,19 @@ class _ReportsState extends State<Reports> {
               ],),
             ),
       
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0, top: 10),
-              child: Container(
-                width: 340,
-                height: 250,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
-                  image: DecorationImage(
-                    image: NetworkImage('https://www.pequerecetas.com/wp-content/uploads/2020/10/tacos-mexicanos.jpg'), 
-                    fit: BoxFit.cover, 
-                  ),
+            //Widget que crea las gráficas de barras
+            BarChartReportes(),
+
+            Container(
+              child: Column(
+                children: [
+                Padding(
+                  padding: const EdgeInsets.only(top:4.0),
+                  child: Text("Gráfica promedio de glucosa (md/dl) por día",
+                  style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
                 ),
-              ),
+
+              ]),
             ),
 
             Container(
@@ -123,78 +137,21 @@ class _ReportsState extends State<Reports> {
                 children: [
                 Padding(
                   padding: const EdgeInsets.only(top:8.0),
-                  child: Text("Periodo:"),
+                  child: Text("Periodo: ${dateFormat.format(Provider.of<ReportsProvider>(context).startDate)} - ${dateFormat.format(Provider.of<ReportsProvider>(context).endDate)}",
+                  style: TextStyle(fontSize: 15),),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text("${dateFormat.format(Provider.of<ReportsProvider>(context).startDate)} - ${dateFormat.format(Provider.of<ReportsProvider>(context).endDate)}")
-                ),
-            
+
               ]),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top:8.0),
+            //   child: Text("Glucosa Promedio: 100 mg/dl"),
+            // ),
 
+            //Widget que de la tabla con las mediciones 
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Table(
-                border: TableBorder.all(),
-                columnWidths: const <int, TableColumnWidth>{
-                  0: FractionColumnWidth(0.65),
-                  1: FlexColumnWidth(),
-                },
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: <TableRow>[
-                  TableRow(
-                    children: <Widget>[
-                      Container(
-                        color: Colors.blue,
-                        child: Center(child: Text("Atributo",style: TextStyle(color:Colors.white),)),
-                      ),
-                      Container(
-                        color: Colors.blue,
-                        child: Center(child: Text("Promedio",style: TextStyle(color:Colors.white),)),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: <Widget>[
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Center(child: Text("Unidades de insulina")),
-                      ),
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Center(child: Text("3.5 U")),
-                      ),
-                    ],
-                  ),
-            
-                  TableRow(
-                    children: <Widget>[
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Center(child: Text("Carbohidratos")),
-                      ),
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Center(child: Text("100 g")),
-                      ),
-                    ],
-                  ),
-
-                  TableRow(
-                    children: <Widget>[
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Center(child: Text("Hemoglobina glucosilada")),
-                      ),
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Center(child: Text("Por implementar")),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              child: ReportTable(),
             ),
       
             SizedBox(
@@ -203,7 +160,7 @@ class _ReportsState extends State<Reports> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20, color:Colors.white),
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)
                   )
