@@ -3,7 +3,7 @@ import 'package:azlistview/azlistview.dart';
 import 'package:insuline_calculator/classes/food.dart';
 import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:insuline_calculator/dummy_data/dummy_data.dart';
-import 'package:insuline_calculator/widgets/food_list_item.dart';
+import 'package:insuline_calculator/widgets/bolus_widgets/food_list_item.dart';
 
 class FoodList extends StatefulWidget {
   const FoodList({super.key});

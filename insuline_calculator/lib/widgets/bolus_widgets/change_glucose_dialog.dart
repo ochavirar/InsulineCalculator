@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dynamic_text_field.dart';
+import 'package:insuline_calculator/widgets/dynamic_text_field.dart';
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/bolus_provider.dart';
 

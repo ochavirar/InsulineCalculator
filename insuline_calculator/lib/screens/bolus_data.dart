@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/widgets/change_glucose_dialog.dart';
+import 'package:insuline_calculator/widgets/bolus_widgets/change_glucose_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/bolus_provider.dart';
 
