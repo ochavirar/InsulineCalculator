@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/widgets/bolus_calendar.dart';
+import 'package:insuline_calculator/widgets/history_widgets/bolus_calendar.dart';
 
 
 class BolusHistory extends StatefulWidget {

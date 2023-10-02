@@ -9,11 +9,10 @@ void main() {
   runApp(
     MultiProvider(
         providers:[
-          
           ChangeNotifierProvider(create: (_) => ReportsProvider())
           ] ,
         child: MaterialApp(
-          home: RegisterFood(),
+          home: BolusHistory(),
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
             useMaterial3: true,

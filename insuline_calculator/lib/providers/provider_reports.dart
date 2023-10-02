@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/widgets/bolus_history_item.dart';
+import 'package:insuline_calculator/widgets/history_widgets/bolus_history_item.dart';
 
 class ReportsProvider with ChangeNotifier{
   DateTime _startDate =  DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day- DateTime.now().weekday % 7);
@@ -46,10 +46,7 @@ class ReportsProvider with ChangeNotifier{
 
     for(int i = 0;i<numDays;i++){
       //Si hay bolus registrados en la fecha, queremos sacar el promedio de estos
-      print(_startDate.add(Duration(days: i)));
-      print("\n\n");
       if(mapBolus.containsKey(_startDate.add(Duration(days: i)).toString().split(' ')[0])){
-        print("Entro\n\n");
         counterDaysWithBolus++;
         counterBolus = 0;
         sumGlucose = 0;
@@ -63,8 +60,6 @@ class ReportsProvider with ChangeNotifier{
           sumUnits += mapBolus[_startDate.add(Duration(days: i)).toString().split(' ')[0]]![j].unitsFood+ mapBolus[_startDate.add(Duration(days: i)).toString().split(' ')[0]]![j].unitsGlucose ;
 
         }
-        print(sumGlucose);
-        print(counterBolus);
         sumGlucose /= counterBolus;
         sumCarbs /= counterBolus;
         sumUnits /= counterBolus;
@@ -80,7 +75,6 @@ class ReportsProvider with ChangeNotifier{
       _totalCarbsAvg /= counterDaysWithBolus;
       _totalUnitsAvg /= counterDaysWithBolus;
     }
-    print(_listAvg);
     notifyListeners();
   }
 

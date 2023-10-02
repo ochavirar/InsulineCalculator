@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/widgets/dynamic_text_field.dart';
-import 'package:insuline_calculator/widgets/dropdown_menu.dart';
+import 'package:insuline_calculator/widgets/register_food_widgets/dropdown_menu.dart';
 
 
 

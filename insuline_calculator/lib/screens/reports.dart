@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/map_bolus.dart';
-import 'package:insuline_calculator/widgets/barchart_reports.dart';
-import 'package:insuline_calculator/widgets/month_picker_dialog.dart';
-import 'package:insuline_calculator/widgets/report_table.dart';
+import 'package:insuline_calculator/widgets/report_widgets/barchart_reports.dart';
+import 'package:insuline_calculator/widgets/report_widgets/month_picker_dialog.dart';
+import 'package:insuline_calculator/widgets/report_widgets/report_table.dart';
+import 'package:insuline_calculator/widgets/report_widgets/week_picker_dialog.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/provider_reports.dart';
-import 'package:insuline_calculator/widgets/week_picker_dialog.dart';
+
 
 class Reports extends StatefulWidget {
   const Reports({super.key});
@@ -19,11 +21,11 @@ class _ReportsState extends State<Reports> {
   DateFormat dateFormat = DateFormat('dd/MM/yyyy');
 
   //Inicializamos a que la pantalla tenga la gráfica y datos de la semana actual
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Provider.of<ReportsProvider>(context).calculateAvg(MapEvents().events);
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   Provider.of<ReportsProvider>(context).calculateAvg(MapEvents().events);
+  // }
 
   void showWeekPicker(BuildContext context) {
   showDialog(
