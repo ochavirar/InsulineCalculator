@@ -5,16 +5,61 @@ import 'package:insuline_calculator/classes/bolus.dart';
 import 'package:insuline_calculator/dummy_data/dummy_data.dart';
 
 class BolusProvider with ChangeNotifier {
-  final Bolus _bolo = boloEpic;
-
+  Bolus _bolo = boloEpic;
   Bolus get boloTest => _bolo;
 
-  double getCarbSum() {
-    double sum = 0;
+  double _carbInsulin = 0;
+  double get carbInsulin => _carbInsulin;
+
+  double _glucoseInsulin = 0;
+  double get glucoseInsulin => _glucoseInsulin;
+
+  double _carbSum = 0;
+  double get carbSum => _carbSum;
+
+  void getCarbSum() {
+    _carbSum = 0;
     for (FoodDetail detalle in _bolo.foodList) {
-      sum += (detalle.quantity * detalle.alimento.basecarbs) /
+      _carbSum += (detalle.quantity * detalle.alimento.basecarbs) /
           detalle.alimento.baseServingSize;
     }
-    return sum;
+  }
+
+  void calculateBolus() {
+    int sensCarbs = 15;
+    int sensGlucose = 12;
+
+    getCarbSum();
+    _carbInsulin = _carbSum / sensCarbs;
+
+    int glucoseTarget = 100; //esta se recuperara de lo que pusieron en settings
+    _glucoseInsulin = (_bolo.glucosa - glucoseTarget) / sensGlucose;
+  }
+
+  void setGlucosa(int glucosa) {
+    _bolo.glucosa = glucosa;
+    calculateBolus();
+    notifyListeners();
+  }
+
+  void addFood(Food comida, int quantity) {
+    _bolo.foodList.add(FoodDetail(alimento: comida, quantity: quantity));
+    getCarbSum();
+    calculateBolus();
+    notifyListeners();
+  }
+
+  void changeFood(Food comida, int quantity) {
+    //arr bonanza
+    getCarbSum();
+    calculateBolus();
+    notifyListeners();
+  }
+
+  void deleteFood(Food comida) {
+    //arr bonanza
+    getCarbSum();
+    calculateBolus();
+    notifyListeners();
   }
 }

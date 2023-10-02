@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/widgets/change_glucose_dialog.dart';
+import 'package:provider/provider.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
 
 class BolusData extends StatefulWidget {
   const BolusData({super.key});
@@ -56,14 +59,14 @@ class _BolusDataState extends State<BolusData> {
                     Padding(
                       padding: const EdgeInsets.only(right: 40),
                       child: Text(
-                        '25' + ' Carbs',
+                        '${context.watch<BolusProvider>().carbSum.toStringAsFixed(2)} Carbs',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Text(
-                        '2.5' + ' Units',
+                        '${context.watch<BolusProvider>().carbInsulin.toStringAsFixed(2)} Units',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -89,7 +92,7 @@ class _BolusDataState extends State<BolusData> {
                   Container(
                     margin: EdgeInsets.all(5),
                     padding: EdgeInsets.all(5),
-                    child: Text(
+                    child: const Text(
                       'Glucosa',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
@@ -112,13 +115,17 @@ class _BolusDataState extends State<BolusData> {
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Text(
-                          '180',
+                          context
+                              .watch<BolusProvider>()
+                              .boloTest
+                              .glucosa
+                              .toString(),
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20),
                       child: Text(
                         'mg/dl',
                         style: TextStyle(fontSize: 20),
@@ -137,21 +144,27 @@ class _BolusDataState extends State<BolusData> {
                       padding: const EdgeInsets.only(right: 40),
                       child: TextButton(
                         style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
-                        child: Text(
+                        child: const Text(
                           'Editar',
                           style: TextStyle(fontSize: 15),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ChangeGlucoseDialog();
+                              });
+                        },
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Text(
-                        '2.5' + '     Units',
+                        '${context.watch<BolusProvider>().glucoseInsulin.toStringAsFixed(2)}  Units',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -174,9 +187,9 @@ class _BolusDataState extends State<BolusData> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.all(5),
-                    padding: EdgeInsets.all(5),
-                    child: Text(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
+                    child: const Text(
                       'Calculo Insulina',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
@@ -184,12 +197,12 @@ class _BolusDataState extends State<BolusData> {
                   )
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.all(10.0),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(right: 40),
                       child: Text(
                         'Carbs',
@@ -197,21 +210,21 @@ class _BolusDataState extends State<BolusData> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 20),
                       child: Text(
-                        '2.5' + ' Units',
-                        style: TextStyle(fontSize: 20),
+                        '${context.watch<BolusProvider>().carbInsulin.toStringAsFixed(2)} Units',
+                        style: const TextStyle(fontSize: 20),
                       ),
                     ),
                   ],
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(right: 40),
                       child: Text(
                         'Glucosa',
@@ -221,22 +234,22 @@ class _BolusDataState extends State<BolusData> {
                     Padding(
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
-                        '2.5' + ' Units',
-                        style: TextStyle(fontSize: 20),
+                        '${context.watch<BolusProvider>().glucoseInsulin.toStringAsFixed(2)} Units',
+                        style: const TextStyle(fontSize: 20),
                       ),
                     ),
                   ],
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(right: 40),
                       child: Text(
                         'Total',
@@ -244,10 +257,10 @@ class _BolusDataState extends State<BolusData> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 20),
                       child: Text(
-                        '3.5' + ' Units',
-                        style: TextStyle(
+                        '${(context.watch<BolusProvider>().glucoseInsulin + context.watch<BolusProvider>().carbInsulin).toStringAsFixed(2)} Units',
+                        style: const TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -261,13 +274,14 @@ class _BolusDataState extends State<BolusData> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: TextButton(
                 style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
                     backgroundColor: Colors.green,
                     foregroundColor: Colors.white),
-                child: Text(
+                child: const Text(
                   'Guardar',
                   style: TextStyle(fontSize: 15),
                 ),

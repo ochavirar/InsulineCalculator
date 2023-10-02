@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dynamic_text_field.dart';
-import 'package:insuline_calculator/classes/food.dart';
+import 'package:provider/provider.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
 
-class EditFoodDialog extends StatefulWidget {
-  const EditFoodDialog({super.key, required this.food, required this.edit});
-
-  final Food food;
-  final bool edit;
-
-  @override
-  State<EditFoodDialog> createState() => _EditFoodDialogState();
-}
-
-class _EditFoodDialogState extends State<EditFoodDialog> {
+class ChangeGlucoseDialog extends StatelessWidget {
+  ChangeGlucoseDialog({super.key});
   final controlador = TextEditingController();
 
   @override
@@ -20,35 +12,13 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
     return AlertDialog(
       title: Center(
         child: Text(
-          widget.edit ? 'Editar Cantidad' : 'Definir Cantidad',
+          'Introducir Glucosa',
           style: const TextStyle(fontSize: 23),
         ),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                widget.food.title,
-                style: TextStyle(fontSize: 16),
-              )
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10, bottom: 30),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image(
-                image: NetworkImage(
-                  widget.food.imageUrl,
-                ),
-                height: 200,
-                width: 200,
-              ),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -63,7 +33,7 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
               Container(
                   margin: EdgeInsets.only(right: 20),
                   child: Text(
-                    widget.food.unit,
+                    'mg/dl',
                     style: TextStyle(fontSize: 15),
                   ))
             ],
@@ -85,7 +55,12 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
                     foregroundColor: Colors.white)),
             TextButton(
                 onPressed: () {
-                  //si esta en
+                  //llamar al provider a que actualice el valor de glucosa con lo que estaba en el textbox
+                  context
+                      .read<BolusProvider>()
+                      .setGlucosa(int.parse(controlador.text));
+
+                  Navigator.of(context).pop();
                 },
                 child: Text('Guardar'),
                 style: TextButton.styleFrom(
