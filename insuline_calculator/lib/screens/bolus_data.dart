@@ -42,7 +42,7 @@ class _BolusDataState extends State<BolusData> {
                   Container(
                     margin: EdgeInsets.all(5),
                     padding: EdgeInsets.all(5),
-                    child: Text(
+                    child: const Text(
                       'Alimentos',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 25),

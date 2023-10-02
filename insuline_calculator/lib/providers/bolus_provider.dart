@@ -42,22 +42,28 @@ class BolusProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addFood(Food comida, int quantity) {
+  void addFood(Food comida, double quantity) {
     _bolo.foodList.add(FoodDetail(alimento: comida, quantity: quantity));
     getCarbSum();
     calculateBolus();
     notifyListeners();
   }
 
-  void changeFood(Food comida, int quantity) {
-    //arr bonanza
+  void changeFood(Food comida, double quantity) {
+    //buscar el elemento a cambiar en el arreglo
+    FoodDetail toChange =
+        _bolo.foodList.firstWhere((man) => man.alimento == comida);
+
+    toChange.quantity = quantity;
+
     getCarbSum();
     calculateBolus();
     notifyListeners();
   }
 
   void deleteFood(Food comida) {
-    //arr bonanza
+    _bolo.foodList.removeWhere((man) => man.alimento == comida);
+
     getCarbSum();
     calculateBolus();
     notifyListeners();

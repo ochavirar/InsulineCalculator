@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'change_food_dialog.dart';
 import 'package:insuline_calculator/classes/food_detail.dart';
+import 'package:provider/provider.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
 
 class BolusFoodItem extends StatefulWidget {
   const BolusFoodItem({super.key, required this.detalle});
@@ -19,8 +21,6 @@ void openEditDialog(context, FoodDetail detalle) {
         return EditFoodDialog(food: detalle.alimento, edit: true);
       });
 }
-
-void deleteItem(context) {}
 
 class _BolusFoodItemState extends State<BolusFoodItem> {
   @override
@@ -44,7 +44,9 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
             icon: Icons.edit,
           ),
           SlidableAction(
-            onPressed: deleteItem,
+            onPressed: (context) {
+              context.read<BolusProvider>().deleteFood(widget.detalle.alimento);
+            },
             backgroundColor: Colors.red,
             foregroundColor: Theme.of(context).secondaryHeaderColor,
             icon: Icons.delete,
@@ -67,11 +69,12 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
               children: [
                 Text(
                   widget.detalle.alimento.title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  widget.detalle.quantity.toString(),
-                  style: TextStyle(),
+                  widget.detalle.quantity.toStringAsFixed(2),
+                  style: const TextStyle(fontSize: 18),
                 )
               ],
             ),
@@ -79,8 +82,8 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
             Padding(
               padding: EdgeInsets.only(right: 10),
               child: Text(
-                '${(widget.detalle.quantity * widget.detalle.alimento.basecarbs) / widget.detalle.alimento.baseServingSize} Carbs',
-                style: TextStyle(fontSize: 18),
+                '${((widget.detalle.quantity * widget.detalle.alimento.basecarbs) / widget.detalle.alimento.baseServingSize).toStringAsFixed(2)} Carbs',
+                style: const TextStyle(fontSize: 18),
               ),
             )
           ],

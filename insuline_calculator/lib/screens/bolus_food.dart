@@ -27,7 +27,7 @@ class _BolusFoodState extends State<BolusFood> {
                   color: Theme.of(context).splashColor,
                   borderRadius: BorderRadius.circular(5)),
               child: Text(
-                'Total de alimentos: ${context.watch<BolusProvider>().carbSum}',
+                'Total de alimentos: ${context.watch<BolusProvider>().carbSum.toStringAsFixed(2)}',
                 style: const TextStyle(fontSize: 20),
               ),
             ),

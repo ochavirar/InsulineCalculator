@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dynamic_text_field.dart';
 import 'package:insuline_calculator/classes/food.dart';
 
+import 'package:provider/provider.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
+
 class EditFoodDialog extends StatefulWidget {
   const EditFoodDialog({super.key, required this.food, required this.edit});
 
@@ -80,12 +83,25 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
                 },
                 child: Text('Cerrar'),
                 style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.white)),
             TextButton(
                 onPressed: () {
-                  //si esta en
+                  //si viene de edit llamar la funcion editar del provider
+                  //si no viene de edit, llamar la funcion agregar del provider
+                  if (widget.edit) {
+                    //funcion de editar del provider
+                    context.read<BolusProvider>().changeFood(
+                        widget.food, double.parse(controlador.text));
+                  } else {
+                    context
+                        .read<BolusProvider>()
+                        .addFood(widget.food, double.parse(controlador.text));
+                  }
+
+                  Navigator.of(context).pop();
                 },
                 child: Text('Guardar'),
                 style: TextButton.styleFrom(

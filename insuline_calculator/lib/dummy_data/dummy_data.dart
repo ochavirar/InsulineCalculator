@@ -33,9 +33,9 @@ Food manzana = Food(
 var dummyFood = [manzana, tacos, zucaritas];
 
 var dummyFoodDetail = [
-  FoodDetail(alimento: zucaritas, quantity: 50),
-  FoodDetail(alimento: tacos, quantity: 3),
-  FoodDetail(alimento: manzana, quantity: 2)
+  FoodDetail(alimento: zucaritas, quantity: 50.0),
+  FoodDetail(alimento: tacos, quantity: 3.0),
+  FoodDetail(alimento: manzana, quantity: 2.0)
 ];
 
 Bolus boloEpic = Bolus(foodList: dummyFoodDetail);

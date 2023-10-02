@@ -2,7 +2,7 @@ import 'food.dart';
 
 class FoodDetail {
   final Food alimento;
-  final int quantity;
+  double quantity;
 
   FoodDetail({required this.alimento, required this.quantity});
 }
