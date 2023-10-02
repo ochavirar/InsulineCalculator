@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/map_bolus.dart';
 import 'package:insuline_calculator/widgets/barchart_reports.dart';
 import 'package:insuline_calculator/widgets/month_picker_dialog.dart';
 import 'package:insuline_calculator/widgets/report_table.dart';
@@ -16,6 +17,14 @@ class Reports extends StatefulWidget {
 
 class _ReportsState extends State<Reports> {
   DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+
+  //Inicializamos a que la pantalla tenga la gráfica y datos de la semana actual
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<ReportsProvider>(context).calculateAvg(MapEvents().events);
+  }
+
   void showWeekPicker(BuildContext context) {
   showDialog(
     context: context,
@@ -125,7 +134,7 @@ class _ReportsState extends State<Reports> {
                 children: [
                 Padding(
                   padding: const EdgeInsets.only(top:4.0),
-                  child: Text("Gráfica promedio de glucosa (md/dl) por día",
+                  child: Text("Gráfica promedio de glucosa (mg/dl) por día",
                   style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
                 ),
 
@@ -143,10 +152,6 @@ class _ReportsState extends State<Reports> {
 
               ]),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(top:8.0),
-            //   child: Text("Glucosa Promedio: 100 mg/dl"),
-            // ),
 
             //Widget que de la tabla con las mediciones 
             Padding(

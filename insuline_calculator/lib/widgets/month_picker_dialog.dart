@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:insuline_calculator/map_bolus.dart';
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/provider_reports.dart';
 import 'package:insuline_calculator/widgets/dropdown_menu_years.dart';
@@ -55,6 +55,7 @@ class _MonthPickerState extends State<MonthPicker> {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),1,1);
                     //Obtenemos el ultimo día restándole 1 al inicial del siguiente mes
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),2,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   } 
                 ),
@@ -74,6 +75,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),2,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),3,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();            
                   }
                 ),
@@ -93,6 +95,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),3,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),4,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -115,6 +118,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),4,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),5,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -135,6 +139,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),5,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),6,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -154,6 +159,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),6,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),7,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -176,6 +182,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),7,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),8,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -195,6 +202,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),8,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),9,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -214,6 +222,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),9,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),10,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -236,6 +245,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),10,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),11,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -255,6 +265,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),11,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text),12,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),
@@ -274,6 +285,7 @@ class _MonthPickerState extends State<MonthPicker> {
                   onPressed: () {
                     Provider.of<ReportsProvider>(context, listen: false).startDate = DateTime.utc(int.parse(controllerDropdown.text),12,1);
                     Provider.of<ReportsProvider>(context, listen: false).endDate = DateTime.utc(int.parse(controllerDropdown.text)+1,1,1).subtract(Duration(days:1));
+                    Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
                     Navigator.of(context).pop();
                   }
                 ),

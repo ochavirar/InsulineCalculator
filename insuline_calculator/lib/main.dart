@@ -7,8 +7,11 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-        create: (_) => ReportsProvider(),
+    MultiProvider(
+        providers:[
+          
+          ChangeNotifierProvider(create: (_) => ReportsProvider())
+          ] ,
         child: MaterialApp(
           home: Reports(),
           theme: ThemeData(

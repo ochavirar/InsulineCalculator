@@ -10,6 +10,7 @@ class BolusHistoryItem extends StatelessWidget {
   final List<String> listFood;
   final double unitsGlucose;
   final double glucoseLevel; 
+  final double carbs;
 
   BolusHistoryItem({
     super.key,
@@ -18,6 +19,7 @@ class BolusHistoryItem extends StatelessWidget {
     required this.listFood,
     required this.unitsGlucose,
     required this.glucoseLevel,
+    required this.carbs
   });
 
 

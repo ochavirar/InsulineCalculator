@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/map_bolus.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/provider_reports.dart';
@@ -38,6 +39,8 @@ class _WeekPickerState extends State<WeekPicker> {
       _controller.selectedRange = PickerDateRange(dat1, dat2);
       Provider.of<ReportsProvider>(context, listen: false).startDate = dat1;
       Provider.of<ReportsProvider>(context, listen: false).endDate = dat2;
+      Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
+
     }
 }
 

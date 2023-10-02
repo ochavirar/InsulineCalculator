@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/providers/provider_reports.dart';
+import 'package:provider/provider.dart';
 
 class ReportTable extends StatelessWidget {
   const ReportTable({super.key});
@@ -52,7 +54,7 @@ class ReportTable extends StatelessWidget {
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Center(child: Text("100 mg/dl")),
+                          child: Center(child: Text("${Provider.of<ReportsProvider>(context, listen: false).totalGlucoseAvg.toStringAsFixed(2) } mg/dl")),
                         )
                       ),
                     ],
@@ -71,7 +73,7 @@ class ReportTable extends StatelessWidget {
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Center(child: Text("3.5 U")),
+                          child: Center(child: Text("${Provider.of<ReportsProvider>(context, listen: false).totalUnitsAvg.toStringAsFixed(2)} U")),
                         )
                       ),
                     ],
@@ -90,7 +92,7 @@ class ReportTable extends StatelessWidget {
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Center(child: Text("100 g")),
+                          child: Center(child: Text("${Provider.of<ReportsProvider>(context, listen: false).totalCarbsAvg.toStringAsFixed(2) } g")),
                         )
                       ),
                     ],

@@ -23,7 +23,7 @@ class _BolusCalendarState extends State<BolusCalendar> {
   //Función para recuperar los eventos del mapa según una llave (día) otorgada.
   List<BolusHistoryItem> _getEventsForDay(DateTime day) {
 
-    return  MapEvents().events[day] ?? [];
+    return  MapEvents().events[day.toString().split(' ')[0]] ?? [];
   }
 
   @override 
