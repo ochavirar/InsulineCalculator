@@ -4,23 +4,17 @@ import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/bolus_provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (_) => BolusProvider(), child: const MyApp()));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => BolusProvider()),
+      //provider garay
+    ],
+    child: MaterialApp(
+      home: MainBolusScreen(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: MainBolusScreen(),
-    );
-  }
+    ),
+  ));
 }
