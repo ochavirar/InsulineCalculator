@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/screens/bolus_history.dart';
 import 'package:insuline_calculator/screens/edit_profile.dart';
+import 'package:insuline_calculator/screens/food_list.dart';
+import 'package:insuline_calculator/screens/reports.dart';
+import 'package:insuline_calculator/screens/sensibility_settings.dart';
 import 'package:insuline_calculator/widgets/utilities/adaptable_text.dart';
 import 'package:insuline_calculator/widgets/utilities/side_bar.dart';
+import 'package:insuline_calculator/screens/main_bolus.dart';
 
 class MainScreenContainer extends StatelessWidget {
   const MainScreenContainer({super.key});
@@ -107,18 +112,31 @@ class ButtonsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: <Widget>[
-        LongButton(text: "Calcular Bolus"),
-        DoubleShortButtonContainer(text1: "Historial", text2: "Configurar factor de sensibilidad"),
-        DoubleShortButtonContainer(text1: "Lista de alimentos", text2: "Reportes")
+        LongButton(text: "Calcular Bolus", target: MainBolusScreen()),
+        DoubleShortButtonContainer(
+          text1: "Historial", 
+          text2: "Configurar factor de sensibilidad",
+          target1: BolusHistory(),
+          target2: SensibilitySettings()
+        ),
+        DoubleShortButtonContainer(
+          text1: "Lista de alimentos", 
+          text2: "Reportes",
+          target1: FoodList(),
+          target2: Reports()
+        )
       ],
     );
   }
 }
 
 class LongButton extends StatelessWidget {
-  const LongButton({super.key, required this.text});
+  const LongButton({super.key, 
+  required this.text, 
+  required this.target});
 
   final String text;
+  final Widget target;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +152,9 @@ class LongButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        onPressed: () {}, 
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => target));
+        }, 
         child: Text(
           text,
           style: const TextStyle(
@@ -149,10 +169,10 @@ class LongButton extends StatelessWidget {
 }
 
 class  ShortButton extends StatelessWidget {
-  const ShortButton({super.key, required this.text});
+  const ShortButton({super.key, required this.text, required this.target});
 
   final String text;
-
+  final Widget target;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -167,7 +187,9 @@ class  ShortButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        onPressed: () {}, 
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => target));
+        }, 
         child: AdaptableText(text, style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold))
       ),
     );
@@ -175,18 +197,24 @@ class  ShortButton extends StatelessWidget {
 }
 
 class DoubleShortButtonContainer extends StatelessWidget {
-  const DoubleShortButtonContainer({super.key, required this.text1, required this.text2});
+  const DoubleShortButtonContainer({super.key, 
+  required this.text1, 
+  required this.text2,
+  required this.target1,
+  required this.target2});
 
   final String text1;
   final String text2;
+  final Widget target1;
+  final Widget target2;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        ShortButton(text: text1),
+        ShortButton(text: text1, target: target1),
         const Spacer(),
-        ShortButton(text: text2)
+        ShortButton(text: text2, target: target2)
       ],
     );
   }
