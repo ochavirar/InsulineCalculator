@@ -18,16 +18,15 @@ class Objective extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
-                  child: const Text("Objetivo: ",
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.01),
+                  child: const Text(
+                    "Objetivo: ",
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                    ),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
-              ), 
+              ),
               const TextField(
                 decoration: InputDecoration(
                   labelText: 'Ejemplo: 100',
@@ -37,19 +36,19 @@ class Objective extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+          padding:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
           child: ElevatedButton(
-            onPressed: () {}, 
-            style: ButtonStyle(
-              fixedSize: MaterialStateProperty.all<Size>(
-                Size(
-                  MediaQuery.of(context).size.width * 0.5,
-                  MediaQuery.of(context).size.height * 0.05,
+              onPressed: () {},
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all<Size>(
+                  Size(
+                    MediaQuery.of(context).size.width * 0.5,
+                    MediaQuery.of(context).size.height * 0.05,
+                  ),
                 ),
               ),
-            ),
-            child: const Text('Guardar')
-          ),
+              child: const Text('Guardar')),
         ),
       ],
     );
@@ -65,7 +64,6 @@ class RangeSliderObjective extends StatefulWidget {
 }
 
 class _RangeSliderObjectiveState extends State<RangeSliderObjective> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,17 +83,17 @@ class _RangeSliderObjectiveState extends State<RangeSliderObjective> {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
-                child: Text(widget.title,
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.01),
+                child: Text(
+                  widget.title,
                   textAlign: TextAlign.left,
                   style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  ),
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-            ), 
-            const RangeSliderTarget(),       
+            ),
+            const RangeSliderTarget(),
           ],
         ),
       ),
@@ -103,7 +101,7 @@ class _RangeSliderObjectiveState extends State<RangeSliderObjective> {
   }
 }
 
-class Ranges{
+class Ranges {
   int start;
   int end;
   Ranges(this.start, this.end);
@@ -139,7 +137,8 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.01),
                 child: Text(
                   widget.title,
                   textAlign: TextAlign.left,
@@ -176,7 +175,6 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
   }
 }
 
-
 class RangeSliderHours extends StatefulWidget {
   const RangeSliderHours({super.key});
 
@@ -191,25 +189,32 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        RangeSlider(  
-          divisions: 24,
-          activeColor: Theme.of(context).secondaryHeaderColor,
-          inactiveColor: Theme.of(context).primaryColor,
-          min: 0,
-          max: 23,
-          values: values,
-          labels: labels,
-          onChanged: (value){
-          setState(() {
-            values = value;
-            labels = RangeLabels("${value.start.toInt().toString()}:00", "${value.end.toInt().toString()}:00");
-          });
-          }
-        ),
-        const Expanded(
-          child: TextField(
-            keyboardAppearance: Brightness.light,
-            keyboardType: TextInputType.number,
+        RangeSlider(
+            divisions: 24,
+            activeColor: Colors.black,
+            inactiveColor: Theme.of(context).primaryColor,
+            min: 0,
+            max: 23,
+            values: values,
+            labels: labels,
+            onChanged: (value) {
+              setState(() {
+                values = value;
+                labels = RangeLabels("${value.start.toInt().toString()}:00",
+                    "${value.end.toInt().toString()}:00");
+              });
+            }),
+        Expanded(
+          child: SizedBox(
+            height: 60,
+            child: TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              )),
+              keyboardAppearance: Brightness.light,
+              keyboardType: TextInputType.number,
+            ),
           ),
         )
       ],
@@ -229,21 +234,20 @@ class _RangeSliderTargetState extends State<RangeSliderTarget> {
   RangeLabels labels = const RangeLabels('50', "300");
   @override
   Widget build(BuildContext context) {
-    return RangeSlider(  
-      activeColor: Colors.green[700],
-      inactiveColor: Colors.blue[300],
-      divisions: 250,
-      min: 50,
-      max: 300,
-      values: values,
-      labels: labels,
-      onChanged: (value){
-      setState(() {
-        values = value;
-        labels = RangeLabels("${value.start.toInt().toString()}.", "${value.end.toInt().toString()}.");
-
-      });
-      }
-    );
+    return RangeSlider(
+        activeColor: Colors.green[700],
+        inactiveColor: Colors.blue[300],
+        divisions: 250,
+        min: 50,
+        max: 300,
+        values: values,
+        labels: labels,
+        onChanged: (value) {
+          setState(() {
+            values = value;
+            labels = RangeLabels("${value.start.toInt().toString()}.",
+                "${value.end.toInt().toString()}.");
+          });
+        });
   }
 }
