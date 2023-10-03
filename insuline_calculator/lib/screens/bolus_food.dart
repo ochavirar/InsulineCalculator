@@ -54,8 +54,10 @@ class _BolusFoodState extends State<BolusFood> {
                 backgroundColor: Colors.green,
                 child: IconButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => FoodList()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const FoodList()));
                   },
                   icon: Icon(Icons.add),
                 ),

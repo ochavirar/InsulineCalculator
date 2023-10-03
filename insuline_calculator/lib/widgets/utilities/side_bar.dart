@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/screens/bolus_history.dart';
 import 'package:insuline_calculator/screens/edit_profile.dart';
+import 'package:insuline_calculator/screens/main_food_list.dart';
 import 'package:insuline_calculator/screens/main_screen.dart';
 import 'package:insuline_calculator/screens/reports.dart';
 import 'package:insuline_calculator/screens/sensibility_settings.dart';
@@ -55,7 +56,7 @@ class SideBar extends StatelessWidget {
         SidebarXItem(
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const EditProfile()));
+                MaterialPageRoute(builder: (context) => MainFoodList()));
           },
           icon: Icons.food_bank,
           label: 'List de alimentos',
