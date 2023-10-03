@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/widgets/bolus_food_item.dart';
+import 'package:insuline_calculator/widgets/bolus_widgets/bolus_food_item.dart';
 
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/bolus_provider.dart';
