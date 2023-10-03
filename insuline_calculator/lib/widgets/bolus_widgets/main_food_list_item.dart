@@ -1,28 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'change_food_dialog.dart';
-import 'package:insuline_calculator/classes/food_detail.dart';
-import 'package:provider/provider.dart';
-import 'package:insuline_calculator/providers/bolus_provider.dart';
+import 'package:insuline_calculator/classes/food.dart'; //para transformar despues a objeto food
+import 'package:insuline_calculator/classes/az_food_list.dart';
+import 'package:insuline_calculator/screens/register_food.dart';
 
-class BolusFoodItem extends StatefulWidget {
-  const BolusFoodItem({super.key, required this.detalle});
+class MainFoodListItem extends StatelessWidget {
+  const MainFoodListItem({super.key, required this.item});
 
-  final FoodDetail detalle;
+  final AZFoodListItem item;
 
-  @override
-  State<BolusFoodItem> createState() => _BolusFoodItemState();
-}
-
-void openEditDialog(context, FoodDetail detalle) {
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return EditFoodDialog(food: detalle.alimento, edit: true);
-      });
-}
-
-class _BolusFoodItemState extends State<BolusFoodItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +23,11 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
         endActionPane: ActionPane(motion: const ScrollMotion(), children: [
           SlidableAction(
             onPressed: (context) {
-              openEditDialog(context, widget.detalle);
+              //abrir pagina de edicion de alimento pero con los valores precargados, pasando objeto food de parametro
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RegisterFood()));
             },
             backgroundColor: Colors.green,
             foregroundColor: Theme.of(context).secondaryHeaderColor,
@@ -45,7 +35,7 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
           ),
           SlidableAction(
             onPressed: (context) {
-              context.read<BolusProvider>().deleteFood(widget.detalle.alimento);
+              //llamar funcion eliminar del provider
             },
             backgroundColor: Colors.red,
             foregroundColor: Theme.of(context).secondaryHeaderColor,
@@ -59,7 +49,7 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image(
-                  image: NetworkImage(widget.detalle.alimento.imageUrl),
+                  image: NetworkImage(item.imageUrl),
                   height: 63,
                   width: 63,
                 ),
@@ -68,24 +58,24 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
             Column(
               children: [
                 Text(
-                  widget.detalle.alimento.title,
+                  item.title,
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  '${widget.detalle.quantity.toStringAsFixed(2)}  ${widget.detalle.alimento.unit}',
-                  style: const TextStyle(fontSize: 18),
-                )
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width / 1.6,
+                    minWidth: MediaQuery.of(context).size.width / 1.6,
+                  ),
+                  child: Text(
+                    item.description,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
               ],
             ),
-            Expanded(child: Container()),
-            Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Text(
-                '${((widget.detalle.quantity * widget.detalle.alimento.basecarbs) / widget.detalle.alimento.baseServingSize).toStringAsFixed(2)} Carbs',
-                style: const TextStyle(fontSize: 18),
-              ),
-            )
           ],
         ),
       ),
