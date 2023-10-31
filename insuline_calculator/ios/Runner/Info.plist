@@ -24,6 +24,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Utilizado para tomar fotos a los alimentos que se quieren registrar</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Utilizado para tomar fotos de la galería para un nuevo alimento que se quiere registrar</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
