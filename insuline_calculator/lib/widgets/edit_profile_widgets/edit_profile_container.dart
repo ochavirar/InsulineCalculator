@@ -9,19 +9,24 @@ class EditProfileContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Editar perfil'),
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.person,
-              size: 40,
-            ),
-            onPressed: () {},
+        title: Text(
+          'Editar perfil',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
-        ],
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(
+        //       Icons.person,
+        //       size: 40,
+        //     ),
+        //     onPressed: () {},
+        //   ),
+        // ],
       ),
-      drawer: const SideBar(),
+      //drawer: const SideBar(),
       body: const Center(
         child: EditProfileForm(),
       ),

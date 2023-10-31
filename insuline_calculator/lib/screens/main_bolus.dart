@@ -21,10 +21,10 @@ class _MainBolusScreenState extends State<MainBolusScreen> {
           title: Text(
             'Bolus de Insulina',
             style: TextStyle(
-              color: Theme.of(context).secondaryHeaderColor,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
         body: _pages[_selectedPage],
         bottomNavigationBar: BottomNavigationBar(
