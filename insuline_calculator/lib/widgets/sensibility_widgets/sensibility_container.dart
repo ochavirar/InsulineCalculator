@@ -28,8 +28,8 @@ class SensibilityContainer extends StatelessWidget {
       drawer: const SideBar(),
       body: ListView(
         children:  const [
-          RangeSliderCategory(title: "Glucosa"),
-          RangeSliderCategory(title: "Carbohidratos"),
+          RangeSliderCategory(title: "Glucosa", id: 0),
+          RangeSliderCategory(title: "Carbohidratos", id: 1),
           RangeSliderObjective(title: "Rango buscado"	),
           Objective()
         ],

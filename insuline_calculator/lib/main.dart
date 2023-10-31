@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/providers/sliders_provider.dart';
 import 'screens/main_bolus.dart';
 import 'screens/log_in.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,8 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => BolusProvider()),
-      ChangeNotifierProvider(create: (_) => ReportsProvider())
+      ChangeNotifierProvider(create: (_) => ReportsProvider()),
+      ChangeNotifierProvider(create: (_) => SliderProvider())
       //provider garay
     ],
     child: MaterialApp(

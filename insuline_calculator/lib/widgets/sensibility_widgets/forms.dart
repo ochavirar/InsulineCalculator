@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/providers/sliders_provider.dart';
+import 'package:provider/provider.dart';
 
 class Objective extends StatelessWidget {
   const Objective({super.key});
@@ -39,7 +41,11 @@ class Objective extends StatelessWidget {
           padding:
               EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
           child: ElevatedButton(
-              onPressed: () {},
+              onPressed: Provider.of<SliderProvider>(context).rangoValidoSliders()
+                  ? () {
+                    print("Valid");
+                  }
+                  : null,
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all<Size>(
                   Size(
@@ -108,15 +114,14 @@ class Ranges {
 }
 
 class RangeSliderCategory extends StatefulWidget {
-  const RangeSliderCategory({Key? key, required this.title}) : super(key: key);
+  const RangeSliderCategory({Key? key, required this.title, required this.id}) : super(key: key);
   final String title;
-
+  final int id;
   @override
   State<RangeSliderCategory> createState() => _RangeSliderCategoryState();
 }
 
 class _RangeSliderCategoryState extends State<RangeSliderCategory> {
-  List<Ranges> sliderTitles = [Ranges(0, 23)];
 
   @override
   Widget build(BuildContext context) {
@@ -151,11 +156,13 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
             ),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: sliderTitles.length,
+              itemCount: (widget.id == 0) 
+              ? Provider.of<SliderProvider>(context).rangosGlucosa.length
+              : Provider.of<SliderProvider>(context).rangosCarbohidratos.length,
               itemBuilder: (context, index) {
-                return const Column(
+                return Column(
                   children: [
-                    RangeSliderHours(), // Replace with your custom slider widget
+                    RangeSliderHours(index: index, id: widget.id), // Replace with your custom slider widget
                   ],
                 );
               },
@@ -163,7 +170,14 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  sliderTitles.add(Ranges(0, 23));
+                  switch(widget.id){
+                    case 0:
+                      Provider.of<SliderProvider>(context, listen: false).agregarRangoGlucosa(Ranges(0, 23));
+                      break;
+                    case 1:
+                      Provider.of<SliderProvider>(context, listen: false).agregarRangoCarbohidratos(Ranges(0, 23));
+                      break;
+                  }
                 });
               },
               icon: const Icon(Icons.add_circle_outline_rounded),
@@ -176,8 +190,9 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
 }
 
 class RangeSliderHours extends StatefulWidget {
-  const RangeSliderHours({super.key});
-
+  const RangeSliderHours({super.key, required this.index, required this.id});
+  final int index;
+  final int id;
   @override
   State<RangeSliderHours> createState() => _RangeSliderHoursState();
 }
@@ -202,6 +217,17 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
                 values = value;
                 labels = RangeLabels("${value.start.toInt().toString()}:00",
                     "${value.end.toInt().toString()}:00");
+
+                switch(widget.id){
+                  case 0:
+                    Provider.of<SliderProvider>(context, listen: false).rangosGlucosa[widget.index].start = value.start.toInt();
+                    Provider.of<SliderProvider>(context, listen: false).rangosGlucosa[widget.index].end = value.end.toInt();
+                    break;
+                  case 1:
+                    Provider.of<SliderProvider>(context, listen: false).rangosCarbohidratos[widget.index].start = value.start.toInt();
+                    Provider.of<SliderProvider>(context, listen: false).rangosCarbohidratos[widget.index].end = value.end.toInt();
+                    break;                  
+                }
               });
             }),
         Expanded(
