@@ -15,7 +15,7 @@ class EditProfileContainer extends StatelessWidget {
             color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         // actions: [
         //   IconButton(
         //     icon: const Icon(

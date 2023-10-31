@@ -8,7 +8,7 @@ class NameChangeForm extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).secondaryHeaderColor,
+        color: Theme.of(context).colorScheme.primaryContainer,
       ),
       padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.1,
@@ -28,12 +28,16 @@ class NameChangeForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: MaterialButton(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.secondary,
               onPressed: () {},
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: const Text('Cambiar'),
+              child: Text(
+                'Cambiar',
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+              ),
             ),
           ),
         ],
@@ -50,7 +54,7 @@ class PasswordChangeForm extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).secondaryHeaderColor,
+        color: Theme.of(context).colorScheme.primaryContainer,
       ),
       padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.1,
@@ -85,12 +89,16 @@ class PasswordChangeForm extends StatelessWidget {
             ),
           ),
           MaterialButton(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.secondary,
               onPressed: () {},
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: const Text('Cambiar')),
+              child: Text(
+                'Cambiar',
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+              )),
         ],
       ),
     );
