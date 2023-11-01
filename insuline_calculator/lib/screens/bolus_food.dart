@@ -28,7 +28,10 @@ class _BolusFoodState extends State<BolusFood> {
                   borderRadius: BorderRadius.circular(5)),
               child: Text(
                 'Total de alimentos: ${context.watch<BolusProvider>().carbSum.toStringAsFixed(2)}',
-                style: const TextStyle(fontSize: 20),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
               ),
             ),
           ],
@@ -51,7 +54,7 @@ class _BolusFoodState extends State<BolusFood> {
               margin: EdgeInsets.all(14),
               child: CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.green,
+                backgroundColor: Theme.of(context).colorScheme.tertiary,
                 child: IconButton(
                   onPressed: () {
                     Navigator.push(
@@ -59,7 +62,10 @@ class _BolusFoodState extends State<BolusFood> {
                         MaterialPageRoute(
                             builder: (context) => const FoodList()));
                   },
-                  icon: Icon(Icons.add),
+                  icon: Icon(
+                    Icons.add,
+                    color: Theme.of(context).colorScheme.onTertiary,
+                  ),
                 ),
               ),
             ),

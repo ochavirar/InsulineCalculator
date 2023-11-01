@@ -6,6 +6,7 @@ import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:insuline_calculator/dummy_data/dummy_data.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:insuline_calculator/widgets/bolus_widgets/main_food_list_item.dart';
+import 'package:insuline_calculator/widgets/utilities/side_bar.dart';
 
 List<AZFoodListItem> getCorrectListType() {
   List<dynamic> valores = dummyFood; //este sera recuperado del api despues
@@ -33,14 +34,15 @@ class MainFoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SideBar(),
       appBar: AppBar(
         title: Text(
           'Lista Alimentos',
           style: TextStyle(
-            color: Theme.of(context).secondaryHeaderColor,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Column(
         children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/widgets/utilities/side_bar.dart';
 import 'bolus_data.dart';
 import 'bolus_food.dart';
 
@@ -17,14 +18,15 @@ class _MainBolusScreenState extends State<MainBolusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: const SideBar(),
         appBar: AppBar(
           title: Text(
             'Bolus de Insulina',
             style: TextStyle(
-              color: Theme.of(context).secondaryHeaderColor,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
         body: _pages[_selectedPage],
         bottomNavigationBar: BottomNavigationBar(
