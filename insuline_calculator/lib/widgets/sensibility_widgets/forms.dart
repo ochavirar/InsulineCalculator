@@ -7,7 +7,6 @@ class Objective extends StatelessWidget {
   const Objective({super.key});
 
   @override
-
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -96,11 +95,11 @@ class ButtonContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
       child: ElevatedButton(
           onPressed: () {
-            if(Provider.of<SliderProvider>(context, listen: false).rangoValidoSliders()){
+            if (Provider.of<SliderProvider>(context, listen: false)
+                .rangoValidoSliders()) {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -144,7 +143,7 @@ class _RangeSliderObjectiveState extends State<RangeSliderObjective> {
       margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).secondaryHeaderColor,
+        color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Padding(
         padding: EdgeInsets.only(
@@ -182,7 +181,8 @@ class Ranges {
 }
 
 class RangeSliderCategory extends StatefulWidget {
-  const RangeSliderCategory({Key? key, required this.title, required this.id}) : super(key: key);
+  const RangeSliderCategory({Key? key, required this.title, required this.id})
+      : super(key: key);
   final String title;
   final int id;
   @override
@@ -190,14 +190,13 @@ class RangeSliderCategory extends StatefulWidget {
 }
 
 class _RangeSliderCategoryState extends State<RangeSliderCategory> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).secondaryHeaderColor,
+        color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Padding(
         padding: EdgeInsets.only(
@@ -224,13 +223,18 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
             ),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: (widget.id == 0) 
-              ? Provider.of<SliderProvider>(context).rangosGlucosa.length
-              : Provider.of<SliderProvider>(context).rangosCarbohidratos.length,
+              itemCount: (widget.id == 0)
+                  ? Provider.of<SliderProvider>(context).rangosGlucosa.length
+                  : Provider.of<SliderProvider>(context)
+                      .rangosCarbohidratos
+                      .length,
               itemBuilder: (context, index) {
                 return Column(
                   children: [
-                    RangeSliderHours(index: index, id: widget.id), // Replace with your custom slider widget
+                    RangeSliderHours(
+                        index: index,
+                        id: widget
+                            .id), // Replace with your custom slider widget
                   ],
                 );
               },
@@ -238,12 +242,14 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  switch(widget.id){
+                  switch (widget.id) {
                     case 0:
-                      Provider.of<SliderProvider>(context, listen: false).agregarRangoGlucosa(Ranges(0, 23));
+                      Provider.of<SliderProvider>(context, listen: false)
+                          .agregarRangoGlucosa(Ranges(0, 23));
                       break;
                     case 1:
-                      Provider.of<SliderProvider>(context, listen: false).agregarRangoCarbohidratos(Ranges(0, 23));
+                      Provider.of<SliderProvider>(context, listen: false)
+                          .agregarRangoCarbohidratos(Ranges(0, 23));
                       break;
                   }
                 });
@@ -274,15 +280,29 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
       children: [
         RangeSlider(
             divisions: 24,
-            activeColor: Colors.black,
-            inactiveColor: Theme.of(context).primaryColor,
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            inactiveColor: Theme.of(context).colorScheme.onTertiary,
             min: 0,
             max: 23,
-            values: (widget.id == 0) 
-            ? RangeValues(Provider.of<SliderProvider>(context).rangosGlucosa[widget.index].start.toDouble(),
-              Provider.of<SliderProvider>(context).rangosGlucosa[widget.index].end.toDouble())
-            : RangeValues(Provider.of<SliderProvider>(context).rangosCarbohidratos[widget.index].start.toDouble(),
-              Provider.of<SliderProvider>(context).rangosCarbohidratos[widget.index].end.toDouble()),
+            values: (widget.id == 0)
+                ? RangeValues(
+                    Provider.of<SliderProvider>(context)
+                        .rangosGlucosa[widget.index]
+                        .start
+                        .toDouble(),
+                    Provider.of<SliderProvider>(context)
+                        .rangosGlucosa[widget.index]
+                        .end
+                        .toDouble())
+                : RangeValues(
+                    Provider.of<SliderProvider>(context)
+                        .rangosCarbohidratos[widget.index]
+                        .start
+                        .toDouble(),
+                    Provider.of<SliderProvider>(context)
+                        .rangosCarbohidratos[widget.index]
+                        .end
+                        .toDouble()),
             labels: labels,
             onChanged: (value) {
               setState(() {
@@ -290,18 +310,27 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
                 labels = RangeLabels("${value.start.toInt().toString()}:00",
                     "${value.end.toInt().toString()}:00");
 
-                switch(widget.id){
+                switch (widget.id) {
                   case 0:
-                    Provider.of<SliderProvider>(context, listen: false).rangosGlucosa[widget.index].start = value.start.toInt();
-                    Provider.of<SliderProvider>(context, listen: false).rangosGlucosa[widget.index].end = value.end.toInt();
+                    Provider.of<SliderProvider>(context, listen: false)
+                        .rangosGlucosa[widget.index]
+                        .start = value.start.toInt();
+                    Provider.of<SliderProvider>(context, listen: false)
+                        .rangosGlucosa[widget.index]
+                        .end = value.end.toInt();
                     break;
                   case 1:
-                    Provider.of<SliderProvider>(context, listen: false).rangosCarbohidratos[widget.index].start = value.start.toInt();
-                    Provider.of<SliderProvider>(context, listen: false).rangosCarbohidratos[widget.index].end = value.end.toInt();
-                    break;                  
+                    Provider.of<SliderProvider>(context, listen: false)
+                        .rangosCarbohidratos[widget.index]
+                        .start = value.start.toInt();
+                    Provider.of<SliderProvider>(context, listen: false)
+                        .rangosCarbohidratos[widget.index]
+                        .end = value.end.toInt();
+                    break;
                 }
 
-                Provider.of<SliderProvider>(context, listen: false).rangoValidoSliders();
+                Provider.of<SliderProvider>(context, listen: false)
+                    .rangoValidoSliders();
               });
             }),
         Expanded(
@@ -335,8 +364,8 @@ class _RangeSliderTargetState extends State<RangeSliderTarget> {
   @override
   Widget build(BuildContext context) {
     return RangeSlider(
-        activeColor: Colors.green[700],
-        inactiveColor: Colors.blue[300],
+        activeColor: Theme.of(context).colorScheme.onSecondaryContainer,
+        inactiveColor: Theme.of(context).colorScheme.secondaryContainer,
         divisions: 250,
         min: 50,
         max: 300,
