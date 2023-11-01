@@ -31,7 +31,7 @@ class _BottomEditProfilePageState extends State<BottomEditProfilePage> {
                     MediaQuery.of(context).size.height * 0.08),
               ),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LogIn()),
                 );

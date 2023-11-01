@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insuline_calculator/screens/bolus_history.dart';
 import 'package:insuline_calculator/screens/edit_profile.dart';
 import 'package:insuline_calculator/screens/food_list.dart';
+import 'package:insuline_calculator/screens/main_food_list.dart';
 import 'package:insuline_calculator/screens/reports.dart';
 import 'package:insuline_calculator/screens/sensibility_settings.dart';
 import 'package:insuline_calculator/widgets/utilities/adaptable_text.dart';
@@ -23,12 +24,19 @@ class MainScreenScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Center(child: Text('INICIO')),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Center(
+            child: Text(
+          'INICIO',
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+        )),
         actions: [
           IconButton(
-            icon: const Icon(Icons.person),
+            icon: Icon(
+              Icons.person,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
             iconSize: 40,
             onPressed: () {
               Navigator.push(context,
@@ -37,7 +45,7 @@ class MainScreenScaffold extends StatelessWidget {
           ),
         ],
       ),
-      drawer: const SideBar(),
+      // drawer: const SideBar(),
       body: const SingleChildScrollView(child: ContentContainer()),
     );
   }
@@ -111,7 +119,7 @@ class ButtonsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: <Widget>[
         LongButton(text: "Calcular Bolus", target: MainBolusScreen()),
         DoubleShortButtonContainer(
@@ -122,7 +130,7 @@ class ButtonsContainer extends StatelessWidget {
         DoubleShortButtonContainer(
             text1: "Lista de alimentos",
             text2: "Reportes",
-            target1: FoodList(),
+            target1: MainFoodList(),
             target2: Reports())
       ],
     );
@@ -149,7 +157,7 @@ class LongButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => target));
         },
         child: Text(
@@ -183,7 +191,7 @@ class ShortButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => target));
           },
           child: AdaptableText(text,
