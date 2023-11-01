@@ -85,12 +85,6 @@ class ConfirmationDialog extends StatelessWidget {
           },
           child: const Text('Aceptar'),
         ),
-        TextButton(
-          onPressed: () {
-            
-          },
-          child: const Text('Hacer cambios'),
-        ),
       ],
     );
   }
