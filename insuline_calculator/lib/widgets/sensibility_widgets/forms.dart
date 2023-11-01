@@ -239,22 +239,43 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
                 );
               },
             ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  switch (widget.id) {
-                    case 0:
-                      Provider.of<SliderProvider>(context, listen: false)
-                          .agregarRangoGlucosa(Ranges(0, 23));
-                      break;
-                    case 1:
-                      Provider.of<SliderProvider>(context, listen: false)
-                          .agregarRangoCarbohidratos(Ranges(0, 23));
-                      break;
-                  }
-                });
-              },
-              icon: const Icon(Icons.add_circle_outline_rounded),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      switch (widget.id) {
+                        case 0:
+                          Provider.of<SliderProvider>(context, listen: false)
+                              .agregarRangoGlucosa(Ranges(0, 23));
+                          break;
+                        case 1:
+                          Provider.of<SliderProvider>(context, listen: false)
+                              .agregarRangoCarbohidratos(Ranges(0, 23));
+                          break;
+                      }
+                    });
+                  },
+                  icon: const Icon(Icons.add_circle_outline_rounded),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      switch(widget.id){
+                        case 0:
+                          Provider.of<SliderProvider>(context, listen: false)
+                              .borrarUltimoElementoGlucosa();
+                          break;
+                        case 1:
+                          Provider.of<SliderProvider>(context, listen: false)
+                            .borrarUltimoElementoCarbohidratos();
+                          break;
+                      }
+                    });
+                  }, 
+                  icon: const Icon(Icons.delete_rounded))
+              ],
             ),
           ],
         ),
@@ -283,7 +304,7 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
             activeColor: Theme.of(context).colorScheme.tertiary,
             inactiveColor: Theme.of(context).colorScheme.onTertiary,
             min: 0,
-            max: 23,
+            max: 24,
             values: (widget.id == 0)
                 ? RangeValues(
                     Provider.of<SliderProvider>(context)
@@ -374,8 +395,8 @@ class _RangeSliderTargetState extends State<RangeSliderTarget> {
         onChanged: (value) {
           setState(() {
             values = value;
-            labels = RangeLabels("${value.start.toInt().toString()}.",
-                "${value.end.toInt().toString()}.");
+            labels = RangeLabels(value.start.toInt().toString(),
+                value.end.toInt().toString());
           });
         });
   }

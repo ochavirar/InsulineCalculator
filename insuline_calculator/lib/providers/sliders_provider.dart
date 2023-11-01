@@ -62,6 +62,20 @@ class SliderProvider with ChangeNotifier {
     }
   }
 
+  void borrarUltimoElementoGlucosa(){
+    if(_rangosGlucosa.length > 1) {
+      _rangosGlucosa.removeLast();
+      notifyListeners();
+    }
+  }
+
+  void borrarUltimoElementoCarbohidratos(){
+    if(_rangosGlucosa.length > 1) {
+      _rangosCarbohidratos.removeLast();
+      notifyListeners();
+    }
+  }
+
   bool rangoValidoSliders() {
     print(rangoValidoCarbohidratos() && rangoValidoGlucosa());
     return rangoValidoCarbohidratos() && rangoValidoGlucosa();
