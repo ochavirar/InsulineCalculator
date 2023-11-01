@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/providers/sliders_provider.dart';
+import 'package:insuline_calculator/screens/main_screen.dart';
+import 'package:provider/provider.dart';
 
 class Objective extends StatelessWidget {
   const Objective({super.key});
 
   @override
+
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -13,44 +17,114 @@ class Objective extends StatelessWidget {
             right: MediaQuery.of(context).size.width * 0.1,
             top: MediaQuery.of(context).size.width * 0.15,
           ),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.01),
-                  child: const Text(
-                    "Objetivo: ",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Ejemplo: 100',
-                ),
-              ),
-            ],
+          child: const Middle(),
+        ),
+        const ButtonContainer(),
+      ],
+    );
+  }
+}
+
+class Middle extends StatelessWidget {
+  const Middle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height * 0.01),
+            child: const Text(
+              "Objetivo: ",
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
-        Padding(
-          padding:
-              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
-          child: ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all<Size>(
-                  Size(
-                    MediaQuery.of(context).size.width * 0.5,
-                    MediaQuery.of(context).size.height * 0.05,
-                  ),
-                ),
-              ),
-              child: const Text('Guardar')),
+        const TextField(
+          decoration: InputDecoration(
+            labelText: 'Ejemplo: 100',
+          ),
         ),
       ],
+    );
+  }
+}
+
+class AlertDialogSlider extends StatelessWidget {
+  const AlertDialogSlider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const AlertDialog(
+      title: Text('Confirmación'),
+      content: Text('El rango de horas no es válido'),
+    );
+  }
+}
+
+class ConfirmationDialog extends StatelessWidget {
+  const ConfirmationDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Cambios correctos'),
+      content: const Text('Se han guardado los cambios'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const MainScreen(),
+              ),
+            );
+          },
+          child: const Text('Aceptar'),
+        ),
+      ],
+    );
+  }
+}
+
+class ButtonContainer extends StatelessWidget {
+  const ButtonContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+          EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+      child: ElevatedButton(
+          onPressed: () {
+            if(Provider.of<SliderProvider>(context, listen: false).rangoValidoSliders()){
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ConfirmationDialog();
+                },
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const AlertDialogSlider();
+                },
+              );
+            }
+          },
+          style: ButtonStyle(
+            fixedSize: MaterialStateProperty.all<Size>(
+              Size(
+                MediaQuery.of(context).size.width * 0.5,
+                MediaQuery.of(context).size.height * 0.05,
+              ),
+            ),
+          ),
+          child: const Text('Guardar')),
     );
   }
 }
@@ -108,15 +182,14 @@ class Ranges {
 }
 
 class RangeSliderCategory extends StatefulWidget {
-  const RangeSliderCategory({Key? key, required this.title}) : super(key: key);
+  const RangeSliderCategory({Key? key, required this.title, required this.id}) : super(key: key);
   final String title;
-
+  final int id;
   @override
   State<RangeSliderCategory> createState() => _RangeSliderCategoryState();
 }
 
 class _RangeSliderCategoryState extends State<RangeSliderCategory> {
-  List<Ranges> sliderTitles = [Ranges(0, 23)];
 
   @override
   Widget build(BuildContext context) {
@@ -151,11 +224,13 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
             ),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: sliderTitles.length,
+              itemCount: (widget.id == 0) 
+              ? Provider.of<SliderProvider>(context).rangosGlucosa.length
+              : Provider.of<SliderProvider>(context).rangosCarbohidratos.length,
               itemBuilder: (context, index) {
-                return const Column(
+                return Column(
                   children: [
-                    RangeSliderHours(), // Replace with your custom slider widget
+                    RangeSliderHours(index: index, id: widget.id), // Replace with your custom slider widget
                   ],
                 );
               },
@@ -163,7 +238,14 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  sliderTitles.add(Ranges(0, 23));
+                  switch(widget.id){
+                    case 0:
+                      Provider.of<SliderProvider>(context, listen: false).agregarRangoGlucosa(Ranges(0, 23));
+                      break;
+                    case 1:
+                      Provider.of<SliderProvider>(context, listen: false).agregarRangoCarbohidratos(Ranges(0, 23));
+                      break;
+                  }
                 });
               },
               icon: const Icon(Icons.add_circle_outline_rounded),
@@ -176,8 +258,9 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
 }
 
 class RangeSliderHours extends StatefulWidget {
-  const RangeSliderHours({super.key});
-
+  const RangeSliderHours({super.key, required this.index, required this.id});
+  final int index;
+  final int id;
   @override
   State<RangeSliderHours> createState() => _RangeSliderHoursState();
 }
@@ -195,13 +278,30 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
             inactiveColor: Theme.of(context).primaryColor,
             min: 0,
             max: 23,
-            values: values,
+            values: (widget.id == 0) 
+            ? RangeValues(Provider.of<SliderProvider>(context).rangosGlucosa[widget.index].start.toDouble(),
+              Provider.of<SliderProvider>(context).rangosGlucosa[widget.index].end.toDouble())
+            : RangeValues(Provider.of<SliderProvider>(context).rangosCarbohidratos[widget.index].start.toDouble(),
+              Provider.of<SliderProvider>(context).rangosCarbohidratos[widget.index].end.toDouble()),
             labels: labels,
             onChanged: (value) {
               setState(() {
                 values = value;
                 labels = RangeLabels("${value.start.toInt().toString()}:00",
                     "${value.end.toInt().toString()}:00");
+
+                switch(widget.id){
+                  case 0:
+                    Provider.of<SliderProvider>(context, listen: false).rangosGlucosa[widget.index].start = value.start.toInt();
+                    Provider.of<SliderProvider>(context, listen: false).rangosGlucosa[widget.index].end = value.end.toInt();
+                    break;
+                  case 1:
+                    Provider.of<SliderProvider>(context, listen: false).rangosCarbohidratos[widget.index].start = value.start.toInt();
+                    Provider.of<SliderProvider>(context, listen: false).rangosCarbohidratos[widget.index].end = value.end.toInt();
+                    break;                  
+                }
+
+                Provider.of<SliderProvider>(context, listen: false).rangoValidoSliders();
               });
             }),
         Expanded(
