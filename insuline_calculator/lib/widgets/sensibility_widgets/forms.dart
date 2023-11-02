@@ -106,6 +106,9 @@ class ButtonContainer extends StatelessWidget {
                   return const ConfirmationDialog();
                 },
               );
+
+              //si se presiono el botón y los sliders son correctos llamar funcion de actualizar sensibilidad
+              Provider.of<SliderProvider>(context, listen: false).saveNewSens();
             } else {
               showDialog(
                 context: context,
@@ -177,6 +180,7 @@ class _RangeSliderObjectiveState extends State<RangeSliderObjective> {
 class Ranges {
   int start;
   int end;
+  //int sens = 1; //sensibilidad de
   Ranges(this.start, this.end);
 }
 
@@ -190,6 +194,28 @@ class RangeSliderCategory extends StatefulWidget {
 }
 
 class _RangeSliderCategoryState extends State<RangeSliderCategory> {
+  List<TextEditingController> _textFieldControllers = [];
+  List<String> _textFieldValues = [];
+
+  void getTextFieldValues() {
+    _textFieldValues = [];
+
+    for (int i = 0; i < _textFieldControllers.length; i++) {
+      //recuperar los valores y guardarlo en el arreglo
+      _textFieldValues.add(_textFieldControllers[i].text);
+
+      if (widget.id == 0) {
+        //llamar actualizar glucosa
+      } else {
+        //llamar actualizar sensibilidad de carbs
+      }
+    }
+  }
+
+  void listenForChanges() {
+    getTextFieldValues();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -229,12 +255,14 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
                       .rangosCarbohidratos
                       .length,
               itemBuilder: (context, index) {
+                _textFieldControllers.add(TextEditingController());
                 return Column(
                   children: [
                     RangeSliderHours(
-                        index: index,
-                        id: widget
-                            .id), // Replace with your custom slider widget
+                      index: index,
+                      id: widget.id,
+                      controlador: _textFieldControllers[index],
+                    ),
                   ],
                 );
               },
@@ -248,11 +276,11 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
                       switch (widget.id) {
                         case 0:
                           Provider.of<SliderProvider>(context, listen: false)
-                              .agregarRangoGlucosa(Ranges(0, 23));
+                              .agregarRangoGlucosa(Ranges(0, 24));
                           break;
                         case 1:
                           Provider.of<SliderProvider>(context, listen: false)
-                              .agregarRangoCarbohidratos(Ranges(0, 23));
+                              .agregarRangoCarbohidratos(Ranges(0, 24));
                           break;
                       }
                     });
@@ -260,21 +288,21 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
                   icon: const Icon(Icons.add_circle_outline_rounded),
                 ),
                 IconButton(
-                  onPressed: () {
-                    setState(() {
-                      switch(widget.id){
-                        case 0:
-                          Provider.of<SliderProvider>(context, listen: false)
-                              .borrarUltimoElementoGlucosa();
-                          break;
-                        case 1:
-                          Provider.of<SliderProvider>(context, listen: false)
-                            .borrarUltimoElementoCarbohidratos();
-                          break;
-                      }
-                    });
-                  }, 
-                  icon: const Icon(Icons.delete_rounded))
+                    onPressed: () {
+                      setState(() {
+                        switch (widget.id) {
+                          case 0:
+                            Provider.of<SliderProvider>(context, listen: false)
+                                .borrarUltimoElementoGlucosa();
+                            break;
+                          case 1:
+                            Provider.of<SliderProvider>(context, listen: false)
+                                .borrarUltimoElementoCarbohidratos();
+                            break;
+                        }
+                      });
+                    },
+                    icon: const Icon(Icons.delete_rounded))
               ],
             ),
           ],
@@ -285,16 +313,21 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
 }
 
 class RangeSliderHours extends StatefulWidget {
-  const RangeSliderHours({super.key, required this.index, required this.id});
+  const RangeSliderHours(
+      {super.key,
+      required this.index,
+      required this.id,
+      required this.controlador});
   final int index;
   final int id;
+  final TextEditingController controlador;
   @override
   State<RangeSliderHours> createState() => _RangeSliderHoursState();
 }
 
 class _RangeSliderHoursState extends State<RangeSliderHours> {
-  RangeValues values = const RangeValues(0, 23);
-  RangeLabels labels = const RangeLabels('0', "23");
+  RangeValues values = const RangeValues(0, 24);
+  RangeLabels labels = const RangeLabels('0', "24");
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -358,6 +391,7 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
           child: SizedBox(
             height: 60,
             child: TextField(
+              controller: widget.controlador,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -395,8 +429,8 @@ class _RangeSliderTargetState extends State<RangeSliderTarget> {
         onChanged: (value) {
           setState(() {
             values = value;
-            labels = RangeLabels(value.start.toInt().toString(),
-                value.end.toInt().toString());
+            labels = RangeLabels(
+                value.start.toInt().toString(), value.end.toInt().toString());
           });
         });
   }
