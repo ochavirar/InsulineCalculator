@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/providers/storage_provider.dart';
+import 'package:provider/provider.dart';
+
 
 class DropdownMenuExample extends StatefulWidget {
   const DropdownMenuExample({super.key});
@@ -9,7 +12,7 @@ class DropdownMenuExample extends StatefulWidget {
 
 class _DropdownMenuExampleState extends State<DropdownMenuExample> {
   final TextEditingController controllerUnits = TextEditingController();
-  String? selectedUnit;
+  String? _selectedUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +33,15 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
         dropdownMenuEntries: unitEntries,
         onSelected: (String? unit) {
           setState(() {
-            selectedUnit = unit;
+            _selectedUnit = unit;
+            Provider.of<StorageProvider>(context, listen: false).selectedUnit = unit!;
           });
         },
       );
   }
-            
+
+  get selectedUnit => _selectedUnit;       
+  
   List<String> units = [
     'g',
     'ml',

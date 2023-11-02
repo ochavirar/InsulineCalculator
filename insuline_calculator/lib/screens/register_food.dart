@@ -5,10 +5,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/classes/permission_gallery.dart';
 import 'package:insuline_calculator/classes/permission_camera.dart';
+import 'package:insuline_calculator/providers/storage_provider.dart';
 import 'package:insuline_calculator/widgets/dynamic_text_field.dart';
 import 'package:insuline_calculator/widgets/register_food_widgets/dropdown_menu.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 
 class RegisterFood extends StatefulWidget {
@@ -19,11 +21,7 @@ class RegisterFood extends StatefulWidget {
 }
 
 class _RegisterFoodState extends State<RegisterFood> {
-  final controllerNombre= TextEditingController();
-  final controllerDescripcion= TextEditingController();
-  final controllerPorcion= TextEditingController();
-  final controllerCarbs= TextEditingController();
-  final controller5= TextEditingController();
+
   File? _selectedImage;
   final picker = ImagePicker();
   late final PermissionGallery _gallerymodel;
@@ -53,14 +51,15 @@ class _RegisterFoodState extends State<RegisterFood> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //Text field generico que acepta el controllador para leer el input
-              DynamicTextField(myController: controllerNombre,height: 45, width: 280, textInputType: TextInputType.multiline, 
+              DynamicTextField(myController: Provider.of<StorageProvider>(context).controllerNombre,
+                height: 45, width: 280, textInputType: TextInputType.multiline, 
                 label: "Nombre del alimento",maxlines: 1,minlines: 1,), 
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: _selectedImage == null
-                    ? Image.network('https://www.pequerecetas.com/wp-content/uploads/2020/10/tacos-mexicanos.jpg',
+                    ? Image.asset('assets/images/not_loaded.jpg',
                       height: 150,
                       fit: BoxFit.contain)
                     : Image.file(_selectedImage!,
@@ -114,7 +113,7 @@ class _RegisterFoodState extends State<RegisterFood> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0,20.0,0,0),
-                child: DynamicTextField(myController: controllerDescripcion, height: 95, width: 300, textInputType: TextInputType.multiline, 
+                child: DynamicTextField(myController: Provider.of<StorageProvider>(context).controllerDescripcion, height: 95, width: 300, textInputType: TextInputType.multiline, 
                   label: "Descripción del alimento", maxlines: 3, minlines: 3),
               ), 
               Padding(
@@ -131,7 +130,7 @@ class _RegisterFoodState extends State<RegisterFood> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(6.0),
-                            child: DynamicTextField(myController: controllerPorcion, height: 60, width: 120, textInputType: TextInputType.number,
+                            child: DynamicTextField(myController: Provider.of<StorageProvider>(context).controllerPorcion, height: 60, width: 120, textInputType: TextInputType.number,
                             label: "Cantidad", maxlines: 1, minlines: 1),
                           ),
                         ]),
@@ -167,7 +166,7 @@ class _RegisterFoodState extends State<RegisterFood> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20.0),
-                        child: DynamicTextField(myController: controllerCarbs, height: 60, width: 120, textInputType: TextInputType.number,
+                        child: DynamicTextField(myController: Provider.of<StorageProvider>(context).controllerCarbs, height: 60, width: 120, textInputType: TextInputType.number,
                         label: "Cantidad", maxlines: 1, minlines: 1),
                       ),
                       ],)
@@ -185,7 +184,10 @@ class _RegisterFoodState extends State<RegisterFood> {
                     )
                   ), 
                   onPressed: () {
-                    
+                    Provider.of<StorageProvider>(context, listen:false).saveAzListFood(context);
+                    setState((){
+                      _selectedImage = null;
+                    });
                   }, 
                   child: const Text('Agregar',style: TextStyle(fontSize: 15, color:Colors.white)),
                 )
@@ -216,10 +218,13 @@ class _RegisterFoodState extends State<RegisterFood> {
           ),
         );
       }
+      else{
+        Provider.of<StorageProvider>(context, listen: false).selectedImage = File(returnedImage.path);
+        setState((){
+          _selectedImage = File(returnedImage.path);
+        });
+      }
 
-      setState((){
-        _selectedImage = File(returnedImage!.path);
-      });
     } else{
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
@@ -257,10 +262,13 @@ class _RegisterFoodState extends State<RegisterFood> {
             ),
           ),
         );
+      }else{
+        Provider.of<StorageProvider>(context, listen:false).selectedImage = File(returnedImage.path);
+        setState((){
+          _selectedImage = File(returnedImage.path); 
+        });
       }
-      setState((){
-        _selectedImage = File(returnedImage!.path);
-      });
+
 
     } else{
       ScaffoldMessenger.of(context)

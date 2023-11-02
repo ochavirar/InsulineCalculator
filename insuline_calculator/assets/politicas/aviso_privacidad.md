@@ -1,6 +1,6 @@
 **Política de Privacidad**
 
-Carlos Garay y Santiago Herrera crearon la app Calculadora de Insulina como una app gratuita. Este SERVICIO se provee sin costo alguno y su uso debido es como tal.
+Carlos Garay y Santiago Herrera crearon la app Calculadora de Insulina como una app gratuita. Este servicio se provee sin costo alguno y su uso debido es como tal.
 
 Este diálogo se utiliza para informar a los posibles usuarios de nuestras politicas con la recolección, uso y divulgación de la información personal en caso de decidir utilizar la Calculadora de Insulina 
 
