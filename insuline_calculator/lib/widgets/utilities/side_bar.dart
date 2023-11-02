@@ -14,20 +14,27 @@ class SideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SidebarX(
-      theme: SidebarXTheme(width: MediaQuery.of(context).size.width * 0.3),
+      theme: SidebarXTheme(
+          width: MediaQuery.of(context).size.width * 0.4,
+          textStyle:
+              TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          selectedTextStyle:
+              TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          selectedIconTheme:
+              IconThemeData(color: Theme.of(context).colorScheme.onBackground)),
       controller: SidebarXController(selectedIndex: 0, extended: true),
       items: [
         SidebarXItem(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const MainScreen()));
           },
           icon: Icons.home,
-          label: 'Inicio',
+          label: ' Inicio',
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const MainBolusScreen()));
@@ -37,7 +44,7 @@ class SideBar extends StatelessWidget {
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const BolusHistory()));
           },
           icon: Icons.timelapse,
@@ -45,25 +52,25 @@ class SideBar extends StatelessWidget {
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const SensibilitySettings()));
           },
           icon: Icons.settings_accessibility,
-          label: 'Factor de sensibilidad',
+          label: 'Sensibilidad',
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => MainFoodList()));
           },
           icon: Icons.food_bank,
-          label: 'List de alimentos',
+          label: 'Alimentos',
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const Reports()));
           },
           icon: Icons.auto_graph,

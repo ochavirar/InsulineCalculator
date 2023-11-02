@@ -29,9 +29,8 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).secondaryHeaderColor,
-      ),
+          borderRadius: BorderRadius.circular(15),
+          color: Theme.of(context).colorScheme.primaryContainer),
       child: Slidable(
         key: const ValueKey(0),
         endActionPane: ActionPane(motion: const ScrollMotion(), children: [
@@ -39,16 +38,16 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
             onPressed: (context) {
               openEditDialog(context, widget.detalle);
             },
-            backgroundColor: Colors.green,
-            foregroundColor: Theme.of(context).secondaryHeaderColor,
+            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            foregroundColor: Theme.of(context).colorScheme.onTertiary,
             icon: Icons.edit,
           ),
           SlidableAction(
             onPressed: (context) {
               context.read<BolusProvider>().deleteFood(widget.detalle.alimento);
             },
-            backgroundColor: Colors.red,
-            foregroundColor: Theme.of(context).secondaryHeaderColor,
+            backgroundColor: Theme.of(context).colorScheme.errorContainer,
+            foregroundColor: Theme.of(context).colorScheme.onErrorContainer,
             icon: Icons.delete,
           )
         ]),
@@ -69,12 +68,17 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
               children: [
                 Text(
                   widget.detalle.alimento.title,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '${widget.detalle.quantity.toStringAsFixed(2)}  ${widget.detalle.alimento.unit}',
-                  style: const TextStyle(fontSize: 18),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
                 )
               ],
             ),
@@ -83,7 +87,10 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
               padding: EdgeInsets.only(right: 10),
               child: Text(
                 '${((widget.detalle.quantity * widget.detalle.alimento.basecarbs) / widget.detalle.alimento.baseServingSize).toStringAsFixed(2)} Carbs',
-                style: const TextStyle(fontSize: 18),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
               ),
             )
           ],
