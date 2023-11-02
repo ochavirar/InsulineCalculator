@@ -13,6 +13,7 @@ class FoodListItem extends StatelessWidget {
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.only(top: 5, bottom: 5, left: 12, right: 20),
+      color: Theme.of(context).colorScheme.secondaryContainer,
       child: InkWell(
         onTap: () {
           showDialog(
@@ -53,6 +54,7 @@ class FoodListItem extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
                     ),
                   ),
                 ),
@@ -68,6 +70,8 @@ class FoodListItem extends StatelessWidget {
                       item.description,
                       style: TextStyle(
                         fontSize: 16.0,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
                       ),
                     ),
                   ),

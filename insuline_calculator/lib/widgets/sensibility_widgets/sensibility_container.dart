@@ -10,26 +10,17 @@ class SensibilityContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Factor de sensibilidad'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(
-                  builder: (context) => const EditProfile()
-                )	
-              );
-            },
-          ),
-        ],
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(
+          'Factor de sensibilidad',
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+        ),
       ),
       drawer: const SideBar(),
       body: ListView(
         children:  const [
-          RangeSliderCategory(title: "Glucosa"),
-          RangeSliderCategory(title: "Carbohidratos"),
+          RangeSliderCategory(title: "Glucosa", id: 0),
+          RangeSliderCategory(title: "Carbohidratos", id: 1),
           RangeSliderObjective(title: "Rango buscado"	),
           Objective()
         ],

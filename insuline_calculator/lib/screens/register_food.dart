@@ -8,9 +8,11 @@ import 'package:insuline_calculator/classes/permission_camera.dart';
 import 'package:insuline_calculator/providers/storage_provider.dart';
 import 'package:insuline_calculator/widgets/dynamic_text_field.dart';
 import 'package:insuline_calculator/widgets/register_food_widgets/dropdown_menu.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+
 
 
 class RegisterFood extends StatefulWidget {
@@ -21,6 +23,7 @@ class RegisterFood extends StatefulWidget {
 }
 
 class _RegisterFoodState extends State<RegisterFood> {
+
 
   File? _selectedImage;
   final picker = ImagePicker();
@@ -34,23 +37,26 @@ class _RegisterFoodState extends State<RegisterFood> {
     _cameramodel = PermissionCamera();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text("Registro de un alimento", style:TextStyle(color: Colors.white)),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Center(
+            child: Text("Registro de un alimento",
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onPrimary))),
       ),
-
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0,20.0,0,15),
+          padding: const EdgeInsets.fromLTRB(0, 20.0, 0, 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //Text field generico que acepta el controllador para leer el input
+
               DynamicTextField(myController: Provider.of<StorageProvider>(context).controllerNombre,
                 height: 45, width: 280, textInputType: TextInputType.multiline, 
                 label: "Nombre del alimento",maxlines: 1,minlines: 1,), 
@@ -121,15 +127,16 @@ class _RegisterFoodState extends State<RegisterFood> {
                 child: Row(children: [
                   Expanded(child: 
                       SizedBox(
+
                         height: 125,
-                        child: Column(
-                          children: [
+                        child: Column(children: [
                           Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: Text("Tamaño porción"),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(6.0),
+
                             child: DynamicTextField(myController: Provider.of<StorageProvider>(context).controllerPorcion, height: 60, width: 120, textInputType: TextInputType.number,
                             label: "Cantidad", maxlines: 1, minlines: 1),
                           ),
@@ -139,40 +146,45 @@ class _RegisterFoodState extends State<RegisterFood> {
               
                     Expanded(child: 
                       SizedBox(
+
                         height: 125,
-                        child: Column(
-                          children: [
+                        child: Column(children: [
                           Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: Text("Unidad alimento"),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: DropdownMenuExample()
-                          ),
+                              padding: const EdgeInsets.all(6.0),
+                              child: DropdownMenuExample()),
                         ]),
                       ),
                     ),
-                ],),
-                
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(children: [
-                    Padding(
+                  Column(
+                    children: [
+                      Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text("Carbs"),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20.0),
+
                         child: DynamicTextField(myController: Provider.of<StorageProvider>(context).controllerCarbs, height: 60, width: 120, textInputType: TextInputType.number,
                         label: "Cantidad", maxlines: 1, minlines: 1),
+
                       ),
-                      ],)
-              ],),
+                    ],
+                  )
+                ],
+              ),
 
               SizedBox(
+
                 width: 140,
                 height: 40,
                 child: ElevatedButton(
@@ -193,10 +205,13 @@ class _RegisterFoodState extends State<RegisterFood> {
                 )
               ),
             ],),
+
           ),
+        ),
       ),
     );
   }
+
 
   //Revisar los permisos y si se tienen, abrir la galería para seleccionar imagen
   Future _pickImageFromGallery() async {
@@ -289,3 +304,4 @@ class _RegisterFoodState extends State<RegisterFood> {
   }
 
 }
+

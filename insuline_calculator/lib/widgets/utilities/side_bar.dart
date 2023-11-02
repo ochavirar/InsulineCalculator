@@ -19,7 +19,7 @@ class SideBar extends StatelessWidget {
       items: [
         SidebarXItem(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const MainScreen()));
           },
           icon: Icons.home,
@@ -27,7 +27,7 @@ class SideBar extends StatelessWidget {
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const MainBolusScreen()));
@@ -37,7 +37,7 @@ class SideBar extends StatelessWidget {
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const BolusHistory()));
           },
           icon: Icons.timelapse,
@@ -45,7 +45,7 @@ class SideBar extends StatelessWidget {
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const SensibilitySettings()));
@@ -55,7 +55,7 @@ class SideBar extends StatelessWidget {
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => MainFoodList()));
           },
           icon: Icons.food_bank,
@@ -63,7 +63,7 @@ class SideBar extends StatelessWidget {
         ),
         SidebarXItem(
           onTap: () {
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const Reports()));
           },
           icon: Icons.auto_graph,

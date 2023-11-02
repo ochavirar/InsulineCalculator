@@ -39,10 +39,10 @@ class _FoodListState extends State<FoodList> {
         title: Text(
           'Lista Alimentos',
           style: TextStyle(
-            color: Theme.of(context).secondaryHeaderColor,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: AzListView(
           data: items,
