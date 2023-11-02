@@ -19,8 +19,6 @@ class ReportsProvider with ChangeNotifier{
   double get totalUnitsAvg => _totalUnitsAvg;
 
 
-
-
   set startDate(DateTime date){
     _startDate = date;
     notifyListeners();
