@@ -196,7 +196,7 @@ class ShortButton extends StatelessWidget {
           },
           child: AdaptableText(text,
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold))),
     );

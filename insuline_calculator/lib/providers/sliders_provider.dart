@@ -4,13 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:insuline_calculator/widgets/sensibility_widgets/forms.dart';
 
 class SliderProvider with ChangeNotifier {
-  // List<Ranges> _rangosGlucosa = [Ranges(0, 24)];
-  // List<Ranges> _rangosCarbohidratos = [Ranges(0, 24)];
+  //variables con los rangos
   List<Ranges> _rangosGlucosa = [];
   List<Ranges> _rangosCarbohidratos = [];
 
   List<Ranges> get rangosGlucosa => _rangosGlucosa;
   List<Ranges> get rangosCarbohidratos => _rangosCarbohidratos;
+
+  //controladores de los textos
+  List<TextEditingController> _listaControllersGlucosa = [];
+  List<TextEditingController> get listaControllersGlucosa =>
+      _listaControllersGlucosa;
+
+  List<TextEditingController> _listaControllersCarbs = [];
+  List<TextEditingController> get listaControllersCarbs =>
+      _listaControllersCarbs;
 
   //variables que van a traer los valores de sensibilidad de cada hora
   List<int> glucoseSensArray = [];
@@ -28,6 +36,7 @@ class SliderProvider with ChangeNotifier {
 
   void agregarRangoGlucosa(Ranges rango) {
     _rangosGlucosa.add(rango);
+    _listaControllersGlucosa.add(TextEditingController());
     //print(_rangosGlucosa.length);
     //print(rangosGlucosa.length);
     notifyListeners();
@@ -35,6 +44,7 @@ class SliderProvider with ChangeNotifier {
 
   void agregarRangoCarbohidratos(Ranges rango) {
     _rangosCarbohidratos.add(rango);
+    _listaControllersCarbs.add(TextEditingController());
     //print(_rangosCarbohidratos.length);
     //print(rangosCarbohidratos.length);
     notifyListeners();

@@ -14,7 +14,14 @@ class SideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SidebarX(
-      theme: SidebarXTheme(width: MediaQuery.of(context).size.width * 0.3),
+      theme: SidebarXTheme(
+          width: MediaQuery.of(context).size.width * 0.4,
+          textStyle:
+              TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          selectedTextStyle:
+              TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          selectedIconTheme:
+              IconThemeData(color: Theme.of(context).colorScheme.onBackground)),
       controller: SidebarXController(selectedIndex: 0, extended: true),
       items: [
         SidebarXItem(
@@ -23,7 +30,7 @@ class SideBar extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const MainScreen()));
           },
           icon: Icons.home,
-          label: 'Inicio',
+          label: ' Inicio',
         ),
         SidebarXItem(
           onTap: () {
@@ -51,7 +58,7 @@ class SideBar extends StatelessWidget {
                     builder: (context) => const SensibilitySettings()));
           },
           icon: Icons.settings_accessibility,
-          label: 'Factor de sensibilidad',
+          label: 'Sensibilidad',
         ),
         SidebarXItem(
           onTap: () {
@@ -59,7 +66,7 @@ class SideBar extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => MainFoodList()));
           },
           icon: Icons.food_bank,
-          label: 'List de alimentos',
+          label: 'Alimentos',
         ),
         SidebarXItem(
           onTap: () {

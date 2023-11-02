@@ -194,28 +194,6 @@ class RangeSliderCategory extends StatefulWidget {
 }
 
 class _RangeSliderCategoryState extends State<RangeSliderCategory> {
-  List<TextEditingController> _textFieldControllers = [];
-  List<String> _textFieldValues = [];
-
-  void getTextFieldValues() {
-    _textFieldValues = [];
-
-    for (int i = 0; i < _textFieldControllers.length; i++) {
-      //recuperar los valores y guardarlo en el arreglo
-      _textFieldValues.add(_textFieldControllers[i].text);
-
-      if (widget.id == 0) {
-        //llamar actualizar glucosa
-      } else {
-        //llamar actualizar sensibilidad de carbs
-      }
-    }
-  }
-
-  void listenForChanges() {
-    getTextFieldValues();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -255,13 +233,12 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
                       .rangosCarbohidratos
                       .length,
               itemBuilder: (context, index) {
-                _textFieldControllers.add(TextEditingController());
                 return Column(
                   children: [
                     RangeSliderHours(
                       index: index,
                       id: widget.id,
-                      controlador: _textFieldControllers[index],
+                      //controlador: _textFieldControllers[index], //esto se va a recuperar del provider
                     ),
                   ],
                 );
@@ -313,14 +290,15 @@ class _RangeSliderCategoryState extends State<RangeSliderCategory> {
 }
 
 class RangeSliderHours extends StatefulWidget {
-  const RangeSliderHours(
-      {super.key,
-      required this.index,
-      required this.id,
-      required this.controlador});
+  const RangeSliderHours({
+    super.key,
+    required this.index,
+    required this.id,
+    //required this.controlador
+  });
   final int index;
   final int id;
-  final TextEditingController controlador;
+  //final TextEditingController controlador;
   @override
   State<RangeSliderHours> createState() => _RangeSliderHoursState();
 }
@@ -391,7 +369,7 @@ class _RangeSliderHoursState extends State<RangeSliderHours> {
           child: SizedBox(
             height: 60,
             child: TextField(
-              controller: widget.controlador,
+              //controller: widget.controlador,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
