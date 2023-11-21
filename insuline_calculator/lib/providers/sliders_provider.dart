@@ -11,6 +11,9 @@ class SliderProvider with ChangeNotifier {
   List<Ranges> get rangosGlucosa => _rangosGlucosa;
   List<Ranges> get rangosCarbohidratos => _rangosCarbohidratos;
 
+  //variables temporales con los valores de los rangos aun no guardados
+  //TO DO
+
   //controladores de los textos
   List<TextEditingController> _listaControllersGlucosa = [];
   List<TextEditingController> get listaControllersGlucosa =>
@@ -20,9 +23,9 @@ class SliderProvider with ChangeNotifier {
   List<TextEditingController> get listaControllersCarbs =>
       _listaControllersCarbs;
 
-  //variables que van a traer los valores de sensibilidad de cada hora
-  List<int> glucoseSensArray = [];
-  List<int> carbsSensArray = [];
+  //listas de enteros que van a tener los valores asociados al rango, para poder cararlos y ponerlos al re abrir la pagina
+  List<int> _glucoseSensArray = [];
+  List<int> _carbsSensArray = [];
 
   int _currentGlucoseSens = 1;
   int _currentCarbsSens = 1;
@@ -103,11 +106,49 @@ class SliderProvider with ChangeNotifier {
   }
 
   bool rangoValidoSliders() {
-    print(rangoValidoCarbohidratos() && rangoValidoGlucosa());
-    return rangoValidoCarbohidratos() && rangoValidoGlucosa();
+    //print(rangoValidoCarbohidratos() && rangoValidoGlucosa());
+    bool retval = rangoValidoCarbohidratos() && rangoValidoGlucosa();
+
+    //iterar por todos los text controllers y asegurarse que el texto no sea vacio
+    for (int i = 0; i < _listaControllersCarbs.length; i++) {
+      String value = _listaControllersCarbs[i].text;
+      //print(value);
+      if (value == '') {
+        retval = false;
+        break;
+      }
+    }
+    for (int i = 0; i < _listaControllersGlucosa.length; i++) {
+      if (_listaControllersGlucosa[i].text == '') {
+        retval = false;
+        break;
+      }
+    }
+
+    //print(retval.toString());
+
+    return retval;
+    //agregar condicion que si hay text fields vacios no permita guardar
   }
 
   void saveNewSens() {
     //actualizar los valores de sensibilidad, la llamada a la funcion de verificar rango de sliders se hace desde el archivo de la pantalla
+    //vamos a agregar los valores a un arreglo temporal correspondiente a los rangos
+    //indice 0 de arreglo de rangos corresponde al indice 0 de valores de este arreglo
+    _glucoseSensArray = [];
+    for (int i = 0; i < _rangosGlucosa.length; i++) {
+      _glucoseSensArray.add(int.parse(_listaControllersGlucosa[i].text));
+    }
+
+    _carbsSensArray = [];
+    for (int i = 0; i < _rangosCarbohidratos.length; i++) {
+      _carbsSensArray.add(int.parse(_listaControllersCarbs[i].text));
+    }
+
+    //print de rangos para debug
+    for (int i = 0; i < _carbsSensArray.length; i++) {
+      print(
+          'inicio rango: ${_rangosCarbohidratos[i].start.toString()}. fin rango: ${_rangosCarbohidratos[i].end.toString()}. con sensibilidad: ${_carbsSensArray[i].toString()}');
+    }
   }
 }
