@@ -17,10 +17,9 @@ class _BolusHistoryState extends State<BolusHistory> {
         drawer: const SideBar(),
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Center(
-              child: Text("Historial Bolus",
+          title: Text("Historial Bolus",
                   style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary))),
+                      color: Theme.of(context).colorScheme.onPrimary)),
         ),
         body: Container(child: BolusCalendar()));
   }
