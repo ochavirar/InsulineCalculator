@@ -113,23 +113,23 @@ class _BolusCalendarState extends State<BolusCalendar> {
                       },
                     );
                   })),
-          Padding(
-            padding: const EdgeInsets.only(top: 6.0),
-            child: SizedBox(
-                width: 120,
-                height: 40,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle:
-                          const TextStyle(fontSize: 14, color: Colors.white),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  onPressed: () {},
-                  child: const Text('Regresar',
-                      style: TextStyle(fontSize: 14, color: Colors.white)),
-                )),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 6.0),
+          //   child: SizedBox(
+          //       width: 120,
+          //       height: 40,
+          //       child: ElevatedButton(
+          //         style: ElevatedButton.styleFrom(
+          //             textStyle:
+          //                 const TextStyle(fontSize: 14, color: Colors.white),
+          //             backgroundColor: Theme.of(context).primaryColor,
+          //             shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(10))),
+          //         onPressed: () {},
+          //         child: const Text('Regresar',
+          //             style: TextStyle(fontSize: 14, color: Colors.white)),
+          //       )),
+          // ),
         ],
       ),
     );

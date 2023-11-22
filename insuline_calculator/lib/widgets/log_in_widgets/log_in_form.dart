@@ -69,10 +69,10 @@ class LogInForm extends StatelessWidget {
                 },
                 child: const Text('Ingresar'),
               ),
-            ]
-          )
+            ),
+          ]
         )
-      ]
-    );
+      )
+    ]);
   }
 }

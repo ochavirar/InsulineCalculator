@@ -50,10 +50,9 @@ class _ReportsState extends State<Reports> {
       drawer: const SideBar(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Center(
-            child: Text("Reportes",
+        title: Text("Reportes",
                 style:
-                    TextStyle(color: Theme.of(context).colorScheme.onPrimary))),
+                    TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 15.0, 10, 15),
@@ -169,20 +168,20 @@ class _ReportsState extends State<Reports> {
                 child: ReportTable(),
               ),
 
-              SizedBox(
-                  width: 140,
-                  height: 40,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        textStyle:
-                            const TextStyle(fontSize: 20, color: Colors.white),
-                        backgroundColor: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5))),
-                    onPressed: () {},
-                    child: const Text('Regresar',
-                        style: TextStyle(fontSize: 15, color: Colors.white)),
-                  )),
+              // SizedBox(
+              //     width: 140,
+              //     height: 40,
+              //     child: ElevatedButton(
+              //       style: ElevatedButton.styleFrom(
+              //           textStyle:
+              //               const TextStyle(fontSize: 20, color: Colors.white),
+              //           backgroundColor: Theme.of(context).primaryColor,
+              //           shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(5))),
+              //       onPressed: () {},
+              //       child: const Text('Regresar',
+              //           style: TextStyle(fontSize: 15, color: Colors.white)),
+              //     )),
             ],
           ),
         ),

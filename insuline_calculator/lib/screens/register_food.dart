@@ -39,10 +39,9 @@ class _RegisterFoodState extends State<RegisterFood> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Center(
-            child: Text("Registro de un alimento",
+        title: Text("Registro de un alimento",
                 style:
-                    TextStyle(color: Theme.of(context).colorScheme.onPrimary))),
+                    TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
       ),
       body: SingleChildScrollView(
         child: Center(

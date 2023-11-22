@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/screens/log_in.dart';
 import 'package:insuline_calculator/providers/theme/theme_provider.dart';
@@ -30,7 +32,9 @@ class _BottomEditProfilePageState extends State<BottomEditProfilePage> {
                 fixedSize: Size(MediaQuery.of(context).size.width * 0.8,
                     MediaQuery.of(context).size.height * 0.08),
               ),
-              onPressed: () {
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                await GoogleSignIn().signOut();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LogIn()),
