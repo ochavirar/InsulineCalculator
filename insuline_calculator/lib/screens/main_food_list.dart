@@ -7,6 +7,8 @@ import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:insuline_calculator/widgets/bolus_widgets/main_food_list_item.dart';
 import 'package:provider/provider.dart';
+import 'package:insuline_calculator/widgets/utilities/side_bar.dart';
+
 
 class MainFoodList extends StatefulWidget {
   const MainFoodList({super.key});
@@ -22,14 +24,15 @@ class _MainFoodListState extends State<MainFoodList> {
   Widget build(BuildContext context) { 
 
     return Scaffold(
+      drawer: const SideBar(),
       appBar: AppBar(
         title: Text(
           'Lista Alimentos',
           style: TextStyle(
-            color: Theme.of(context).secondaryHeaderColor,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: FutureBuilder<void>(
         future:Provider.of<StorageProvider>(context).getAzListFood(context),

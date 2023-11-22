@@ -8,46 +8,43 @@ class NameChangeForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.21,
-            width: MediaQuery.of(context).size.width * 0.9,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).secondaryHeaderColor,
-            )
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Theme.of(context).colorScheme.primaryContainer,
+      ),
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.1,
+          vertical: MediaQuery.of(context).size.width * 0.05),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      child: Column(
+        children: [
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: FormText(text: 'Nombres'),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
-          child: Column(
-            children: [
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: FormText(text: 'Nombre'),
-              ),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: 'Ingresa tu nombre',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MaterialButton(
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const Text('Cambiar'),
-                ),
-              ),
-            ],
+          const TextField(
+            decoration: InputDecoration(
+              hintText: 'Ingresa tu nombre',
+            ),
           ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MaterialButton(
+              color: Theme.of(context).colorScheme.secondary,
+              onPressed: () {},
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                'Cambiar',
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -57,111 +54,56 @@ class PasswordChangeForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-        children:[
-          Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.4,
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: Theme.of(context).secondaryHeaderColor,
-              )
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Theme.of(context).colorScheme.primaryContainer,
+      ),
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.1,
+          vertical: MediaQuery.of(context).size.width * 0.05),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      child: Column(
+        children: [
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: FormText(text: 'Contraseña'),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.02,
+              bottom: MediaQuery.of(context).size.height * 0.02,
+            ),
+            child: const TextField(
+              decoration: InputDecoration(
+                hintText: 'Ingresa tu nueva contraseña',
+              ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
-            child: Column(
-              children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: FormText(text: 'Contraseña'),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.02,
-                    bottom: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Ingresa tu nueva contraseña',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.005,
-                    bottom: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Confirma tu nueva contraseña',
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () {}, 
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const Text('Cambiar')
-                ),
-                const SwitchDarkMode(),
-                Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      fixedSize: Size(
-                        MediaQuery.of(context).size.width * 0.8, 
-                        MediaQuery.of(context).size.height * 0.08
-                      ),
-                    ),
-                    onPressed: () async {
-                      await FirebaseAuth.instance.signOut();
-                      await GoogleSignIn().signOut();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const LogIn()),
-                      );
-                    }, 
-                    child: const Text('Cerrar sesión')
-                  ),
-                ) 
-              ],
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.005,
+              bottom: MediaQuery.of(context).size.height * 0.02,
+            ),
+            child: const TextField(
+              decoration: InputDecoration(
+                hintText: 'Confirma tu nueva contraseña',
+              ),
             ),
           ),
-        ] 
-    );
-  }
-}
-
-class SwitchDarkMode extends StatefulWidget {
-  const SwitchDarkMode({super.key});
-
-  @override
-  State<SwitchDarkMode> createState() => _SwitchDarkModeState();
-}
-
-class _SwitchDarkModeState extends State<SwitchDarkMode> {
-  bool darkMode = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        const Text('Modo oscuro'),
-        Switch(
-          value: darkMode,
-          onChanged: (value) {
-            setState(() {
-              darkMode = value;
-            });
-          },
-        ),
-      ],
+          MaterialButton(
+              color: Theme.of(context).colorScheme.secondary,
+              onPressed: () {},
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                'Cambiar',
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+              )),
+        ],
+      ),
     );
   }
 }
@@ -173,12 +115,9 @@ class FormText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, 
-      style: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold
-      ),
+    return Text(
+      text,
+      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     );
   }
 }
-
