@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/map_bolus.dart';
 import 'package:insuline_calculator/widgets/report_widgets/barchart_reports.dart';
 import 'package:insuline_calculator/widgets/report_widgets/month_picker_dialog.dart';
 import 'package:insuline_calculator/widgets/report_widgets/report_table.dart';

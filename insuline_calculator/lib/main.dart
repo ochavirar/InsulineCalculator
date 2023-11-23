@@ -5,12 +5,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:insuline_calculator/firebase_options.dart';
 import 'package:insuline_calculator/providers/storage_provider.dart';
-import 'screens/main_bolus.dart';
 import 'screens/log_in.dart';
 
 import 'package:insuline_calculator/providers/sliders_provider.dart';
-import 'package:insuline_calculator/screens/main_screen.dart';
-// import 'screens/log_in.dart';
 
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/theme/theme_provider.dart';
@@ -43,6 +40,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Insulin Calculator',
         theme: context.watch<ThemeProvider>().themeData,
-        home: const MainScreen());
+        home: const LogIn());
   }
 }

@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:insuline_calculator/classes/az_food_list.dart';
-import 'package:insuline_calculator/widgets/history_widgets/bolus_history_item.dart';
 
 class StorageProvider with ChangeNotifier{
   List<AZFoodListItem> _listFood = []; //Lista que contendrá los alimentos dados de alta en la aplicación
@@ -13,6 +13,11 @@ class StorageProvider with ChangeNotifier{
   final _controllerDescripcion= TextEditingController();
   final _controllerPorcion= TextEditingController();
   final _controllerCarbs= TextEditingController();
+
+  final _firestore = FirebaseFirestore.instance;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   String selectedUnit = "g";
   File? selectedImage;
 
@@ -22,6 +27,7 @@ class StorageProvider with ChangeNotifier{
   TextEditingController get controllerDescripcion=> _controllerDescripcion;
   TextEditingController get controllerPorcion=> _controllerPorcion;
   TextEditingController get controllerCarbs=> _controllerCarbs;
+  FirebaseFirestore get firestore => _firestore; 
   
   //Verificamos que no esten vacíos los campos de texto y guardamos en la base de datos el nuevo alimento
   void saveAzListFood(BuildContext context) async{
@@ -46,7 +52,22 @@ class StorageProvider with ChangeNotifier{
           description: _controllerDescripcion.text,
           imageUrl: selectedImage == null? "null" : selectedImage!.path
         );
+        User user = _auth.currentUser!;
+        String mailID = user.email ?? 'error';
+
+        final foodFire = <String, dynamic>{
+          "carbos": int.parse(_controllerCarbs.text),
+          "descripcion": _controllerDescripcion.text,
+          "email": mailID,
+          "imagen": "placeholder",
+          "nombre": _controllerNombre.text,
+          "porcion": int.parse(_controllerPorcion.text),
+          "unidad": selectedUnit,
+        };
         
+        firestore.collection("alimento").add(foodFire).then((DocumentReference doc) => 
+          print("Documento añadido con ID: ${doc.id}"));
+
         _listFood.add(listItem);
         await foodBox.put("allAzFood", _listFood);
         await foodBox.close();

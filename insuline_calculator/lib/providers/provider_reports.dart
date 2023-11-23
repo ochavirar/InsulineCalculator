@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/widgets/history_widgets/bolus_history_item.dart';
 

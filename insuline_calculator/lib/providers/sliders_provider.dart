@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/widgets/sensibility_widgets/forms.dart';
 

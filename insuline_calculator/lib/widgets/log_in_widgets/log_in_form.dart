@@ -1,8 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/screens/main_screen.dart';
-import 'package:insuline_calculator/screens/sign_up.dart';
-import 'package:insuline_calculator/widgets/log_in_widgets/policy_dialog.dart';
 
 class LogInForm extends StatelessWidget {
   const LogInForm({super.key});
