@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/screens/edit_profile.dart';
 import 'package:insuline_calculator/widgets/sensibility_widgets/forms.dart';
 import 'package:insuline_calculator/widgets/utilities/side_bar.dart';
 

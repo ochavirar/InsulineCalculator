@@ -1,12 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/screens/bolus_history.dart';
 import 'package:insuline_calculator/screens/edit_profile.dart';
-import 'package:insuline_calculator/screens/food_list.dart';
 import 'package:insuline_calculator/screens/main_food_list.dart';
 import 'package:insuline_calculator/screens/reports.dart';
 import 'package:insuline_calculator/screens/sensibility_settings.dart';
 import 'package:insuline_calculator/widgets/utilities/adaptable_text.dart';
-import 'package:insuline_calculator/widgets/utilities/side_bar.dart';
 import 'package:insuline_calculator/screens/main_bolus.dart';
 
 class MainScreenContainer extends StatelessWidget {
@@ -73,8 +72,8 @@ class ColumnContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Image.network(
-            'https://cdn.dribbble.com/users/937082/screenshots/5516643/blob_4x'),
+        Image.asset(
+            'assets/images/not_loaded.jpg'),
         const LeftAlignmentText(),
         const StackNavigation()
       ],
@@ -87,15 +86,20 @@ class LeftAlignmentText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser!;
+
+    String mailID = user.email ?? 'error';
     return Padding(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).size.height * 0.02,
         bottom: MediaQuery.of(context).size.height * 0.02,
       ),
-      child: const Align(
+      child: Align(
         alignment: Alignment.topLeft,
         child: Text(
-          "Bienvenido [Username]",
+          "Bienvenido $mailID",
         ),
       ),
     );

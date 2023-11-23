@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/screens/bolus_history.dart';
-import 'package:insuline_calculator/screens/edit_profile.dart';
 import 'package:insuline_calculator/screens/main_food_list.dart';
 import 'package:insuline_calculator/screens/main_screen.dart';
 import 'package:insuline_calculator/screens/reports.dart';
