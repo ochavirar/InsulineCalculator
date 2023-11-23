@@ -44,7 +44,8 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
           ),
           SlidableAction(
             onPressed: (context) {
-              context.read<BolusProvider>().deleteFood(widget.detalle.alimento);
+              Provider.of<BolusProvider>(context, listen: false)
+                  .deleteFood(widget.detalle.alimento, context);
             },
             backgroundColor: Theme.of(context).colorScheme.errorContainer,
             foregroundColor: Theme.of(context).colorScheme.onErrorContainer,

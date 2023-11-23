@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/screens/main_screen.dart';
 import 'package:insuline_calculator/widgets/bolus_widgets/change_glucose_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/bolus_provider.dart';
@@ -341,7 +342,16 @@ class _BolusDataState extends State<BolusData> {
                   'Guardar',
                   style: TextStyle(fontSize: 15),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<BolusProvider>(context, listen: false)
+                      .saveBolus();
+
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainScreen()));
+                  //regresarte a la main screen
+                },
               ),
             ),
           ],

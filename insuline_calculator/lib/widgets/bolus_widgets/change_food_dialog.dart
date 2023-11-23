@@ -93,12 +93,16 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
                   //si no viene de edit, llamar la funcion agregar del provider
                   if (widget.edit) {
                     //funcion de editar del provider
-                    context.read<BolusProvider>().changeFood(
-                        widget.food, double.parse(controlador.text));
+                    Provider.of<BolusProvider>(context, listen: false)
+                        .changeFood(widget.food, double.parse(controlador.text),
+                            context);
+                    // context.read<BolusProvider>().changeFood(
+                    //     widget.food, double.parse(controlador.text), context);
                   } else {
-                    context
-                        .read<BolusProvider>()
-                        .addFood(widget.food, double.parse(controlador.text));
+                    Provider.of<BolusProvider>(context, listen: false).addFood(
+                        widget.food, double.parse(controlador.text), context);
+                    // context.read<BolusProvider>().addFood(
+                    //     widget.food, double.parse(controlador.text), context);
                   }
 
                   Navigator.of(context).pop();
