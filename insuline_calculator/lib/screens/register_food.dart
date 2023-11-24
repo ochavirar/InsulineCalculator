@@ -106,7 +106,7 @@ class _RegisterFoodState extends State<RegisterFood> {
                               backgroundColor: Theme.of(context).primaryColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5))),
-                          child: const Text('Agregar imagen de galería',
+                          child: const Text('Agregar de galería',
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 15, color: Colors.white)),
@@ -234,7 +234,7 @@ class _RegisterFoodState extends State<RegisterFood> {
 
     if (hasGalleryPermission) {
       XFile? returnedImage =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
+          await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 30);
 
       if (returnedImage == null) {
         ScaffoldMessenger.of(context)
@@ -281,7 +281,7 @@ class _RegisterFoodState extends State<RegisterFood> {
 
     if (hasCameraPermission) {
       XFile? returnedImage =
-          await ImagePicker().pickImage(source: ImageSource.camera);
+          await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 30);
 
       if (returnedImage == null) {
         ScaffoldMessenger.of(context)
