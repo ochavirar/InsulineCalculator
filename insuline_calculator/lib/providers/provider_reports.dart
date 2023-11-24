@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/widgets/history_widgets/bolus_history_item.dart';
+import 'package:insuline_calculator/classes/full_bolus.dart';
 
 class ReportsProvider with ChangeNotifier{
   DateTime _startDate =  DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day- DateTime.now().weekday % 7);
@@ -27,7 +27,7 @@ class ReportsProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  void calculateAvg(Map<String, List<BolusHistoryItem>> mapBolus){
+  void calculateAvg(Map<String, List<FullBolus>> mapBolus){
     int numDays = _endDate.difference(_startDate).inDays +1;
     _listAvg = List.filled(numDays, 0); 
     int counterBolus = 0;

@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:insuline_calculator/classes/az_food_list.dart';
 
 class StorageProvider with ChangeNotifier{
@@ -144,8 +143,6 @@ class StorageProvider with ChangeNotifier{
     );
   }
 
-
-    
   void clearFoodForm(){
     controllerNombre.clear();
     controllerDescripcion.clear();

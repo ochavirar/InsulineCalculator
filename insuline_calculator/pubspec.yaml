@@ -88,6 +88,7 @@ flutter:
     - assets/images/corazon.png
     - assets/politicas/terminos_condiciones.md
     - assets/politicas/aviso_privacidad.md
+    - assets/images/main_image.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

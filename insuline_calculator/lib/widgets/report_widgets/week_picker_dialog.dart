@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/map_bolus.dart';
+import 'package:insuline_calculator/classes/full_bolus.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:provider/provider.dart';
 import 'package:insuline_calculator/providers/provider_reports.dart';
 
 
 class WeekPicker extends StatefulWidget {
-  const WeekPicker({super.key});
+  final Map<String, List<FullBolus>> cleanMap;
+  const WeekPicker({super.key, required Map<String, List<FullBolus>> this.cleanMap});
+  
   @override
   _WeekPickerState createState() => _WeekPickerState();
 }
@@ -39,7 +41,7 @@ class _WeekPickerState extends State<WeekPicker> {
       _controller.selectedRange = PickerDateRange(dat1, dat2);
       Provider.of<ReportsProvider>(context, listen: false).startDate = dat1;
       Provider.of<ReportsProvider>(context, listen: false).endDate = dat2;
-      Provider.of<ReportsProvider>(context, listen: false).calculateAvg(MapEvents().events);
+      Provider.of<ReportsProvider>(context, listen: false).calculateAvg(widget.cleanMap);
 
     }
 }

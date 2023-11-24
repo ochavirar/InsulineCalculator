@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
 import 'package:insuline_calculator/screens/bolus_history.dart';
 import 'package:insuline_calculator/screens/edit_profile.dart';
 import 'package:insuline_calculator/screens/main_food_list.dart';
@@ -7,6 +8,7 @@ import 'package:insuline_calculator/screens/reports.dart';
 import 'package:insuline_calculator/screens/sensibility_settings.dart';
 import 'package:insuline_calculator/widgets/utilities/adaptable_text.dart';
 import 'package:insuline_calculator/screens/main_bolus.dart';
+import 'package:provider/provider.dart';
 
 class MainScreenContainer extends StatelessWidget {
   const MainScreenContainer({super.key});
@@ -73,7 +75,7 @@ class ColumnContainer extends StatelessWidget {
     return Column(
       children: <Widget>[
         Image.asset(
-            'assets/images/not_loaded.jpg'),
+            'assets/images/main_image.jpg'),
         const LeftAlignmentText(),
         const StackNavigation()
       ],
@@ -194,7 +196,8 @@ class ShortButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
           ),
-          onPressed: () {
+          onPressed: () async {
+            await Provider.of<BolusProvider>(context, listen:false).createHistoryMap();
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => target));
           },

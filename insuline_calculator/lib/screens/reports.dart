@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/classes/full_bolus.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
 import 'package:insuline_calculator/widgets/report_widgets/barchart_reports.dart';
 import 'package:insuline_calculator/widgets/report_widgets/month_picker_dialog.dart';
 import 'package:insuline_calculator/widgets/report_widgets/report_table.dart';
@@ -18,27 +22,28 @@ class Reports extends StatefulWidget {
 
 class _ReportsState extends State<Reports> {
   DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+  Map<String, List<FullBolus>> cleanMap = {};
 
-  //Inicializamos a que la pantalla tenga la gráfica y datos de la semana actual
+  //Inicializamos a que la pantalla tenga la gráfica y datos de la semana actual 
   // @override
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
   //   Provider.of<ReportsProvider>(context).calculateAvg(MapEvents().events);
   // }
 
-  void showWeekPicker(BuildContext context) {
+  void showWeekPicker(BuildContext context, Map<String, List<FullBolus>> cleanMap) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return WeekPicker();
+          return WeekPicker(cleanMap: cleanMap);
         });
   }
 
-  void showMonthPicker(BuildContext context) {
+  void showMonthPicker(BuildContext context, Map<String, List<FullBolus>> cleanMap) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return MonthPicker();
+          return MonthPicker(cleanMap: cleanMap,);
         });
   }
 
@@ -85,8 +90,9 @@ class _ReportsState extends State<Reports> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5))),
-                                  onPressed: () {
-                                    showWeekPicker(context);
+                                  onPressed: () async{
+                                    cleanMap = await Provider.of<BolusProvider>(context, listen:false).createCleanMap();
+                                    showWeekPicker(context, cleanMap);
                                   },
                                   child: const Text('Elegir semana',
                                       style: TextStyle(
@@ -118,8 +124,9 @@ class _ReportsState extends State<Reports> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5))),
-                                  onPressed: () {
-                                    showMonthPicker(context);
+                                  onPressed: () async {
+                                    cleanMap = await Provider.of<BolusProvider>(context, listen:false).createCleanMap();
+                                    showMonthPicker(context, cleanMap);
                                   },
                                   child: const Text('Elegir mes',
                                       style: TextStyle(

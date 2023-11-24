@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:insuline_calculator/classes/food.dart'; //para transformar despues a objeto food
 import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:insuline_calculator/providers/storage_provider.dart';
 import 'package:insuline_calculator/screens/register_food.dart';
