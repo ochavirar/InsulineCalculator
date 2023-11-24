@@ -57,11 +57,14 @@ class _MainFoodListState extends State<MainFoodList> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const RegisterFood()));
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegisterFood()));
+                          setState(() {
+                                items = Provider.of<StorageProvider>(context, listen: false).listFood;
+                              });
                         },
                         icon: const Icon(Icons.add)),
                   ],
@@ -91,7 +94,16 @@ class _MainFoodListState extends State<MainFoodList> {
                       data: items,
                       itemCount: items.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return MainFoodListItem(item: items[index],index: index);
+                        return MainFoodListItem(
+                          item: items[index], 
+                          index:index, 
+                          name: items[index].title, 
+                          path: items[index].imageUrl,
+                          onPressedCallBack: () async {
+                            setState(() {
+                                items = Provider.of<StorageProvider>(context, listen: false).listFood;
+                              });
+                          });
                       }),
                 ),
               ],
