@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
 import 'package:insuline_calculator/screens/bolus_history.dart';
 import 'package:insuline_calculator/screens/main_food_list.dart';
 import 'package:insuline_calculator/screens/main_screen.dart';
 import 'package:insuline_calculator/screens/reports.dart';
 import 'package:insuline_calculator/screens/sensibility_settings.dart';
+import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:insuline_calculator/screens/main_bolus.dart';
 
@@ -42,7 +44,8 @@ class SideBar extends StatelessWidget {
           label: 'Calcular Bolus',
         ),
         SidebarXItem(
-          onTap: () {
+          onTap: () async {
+            await Provider.of<BolusProvider>(context, listen:false).createHistoryMap();
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const BolusHistory()));
           },

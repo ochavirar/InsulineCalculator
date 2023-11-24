@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:insuline_calculator/map_bolus.dart';
+import 'package:insuline_calculator/providers/bolus_provider.dart';
 import 'package:insuline_calculator/widgets/history_widgets/bolus_history_item.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BolusCalendar extends StatefulWidget {
@@ -14,18 +15,21 @@ class _BolusCalendarState extends State<BolusCalendar> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  Map<String, List<BolusHistoryItem>> cleanMap = {};
+
   //Valores hardcodeados para mostrar los eventos del calendario
 
   //Función para recuperar los eventos del mapa según una llave (día) otorgada.
   List<BolusHistoryItem> _getEventsForDay(DateTime day) {
-    return MapEvents().events[day.toString().split(' ')[0]] ?? [];
+    cleanMap = Provider.of<BolusProvider>(context, listen:false).historyMap;
+    return cleanMap[day.toString().split(' ')[0]] ?? [];
   }
 
   @override
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    _selectedEvents = ValueNotifier( _getEventsForDay(_selectedDay!));
   }
 
   @override
@@ -34,7 +38,7 @@ class _BolusCalendarState extends State<BolusCalendar> {
     super.dispose();
   }
 
-  void _onDaySelected(selectedDay, focusedDay) {
+  void _onDaySelected(selectedDay, focusedDay)  {
     if (!isSameDay(_selectedDay, selectedDay)) {
       // Call `setState()` when updating the selected day
       setState(() {
@@ -42,12 +46,12 @@ class _BolusCalendarState extends State<BolusCalendar> {
         _focusedDay = focusedDay;
       });
 
-      _selectedEvents.value = _getEventsForDay(selectedDay);
+      _selectedEvents.value =  _getEventsForDay(selectedDay);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10.0, 0, 10, 10),
       child: Column(
