@@ -9,10 +9,14 @@ class SliderProvider with ChangeNotifier {
   List<Ranges> get rangosGlucosa => _rangosGlucosa;
   List<Ranges> get rangosCarbohidratos => _rangosCarbohidratos;
 
-  //variables temporales con los valores de los rangos aun no guardados
-  //TO DO
+  //Varlores finales de los rangos
+
+  List<Ranges> _rangosGlucosaFinales = [];
+  List<Ranges> _rangosCarbohidratosFinales = [];
 
   //controladores de los textos
+
+  //durante la edicion
   List<TextEditingController> _listaControllersGlucosa = [];
   List<TextEditingController> get listaControllersGlucosa =>
       _listaControllersGlucosa;
@@ -21,15 +25,28 @@ class SliderProvider with ChangeNotifier {
   List<TextEditingController> get listaControllersCarbs =>
       _listaControllersCarbs;
 
+  //finales
+
+  List<TextEditingController> _listaControllersGlucosaFinal = [];
+  List<TextEditingController> get listaControllersGlucosaFinal =>
+      _listaControllersGlucosaFinal;
+
+  List<TextEditingController> _listaControllersCarbsFinal = [];
+  List<TextEditingController> get listaControllersCarbsFinal =>
+      _listaControllersCarbsFinal;
+
   //listas de enteros que van a tener los valores asociados al rango, para poder cararlos y ponerlos al re abrir la pagina
   List<int> _glucoseSensArray = [];
   List<int> _carbsSensArray = [];
 
-  int _currentGlucoseSens = 1;
-  int _currentCarbsSens = 1;
+  //se van a recuperar manualmente desde bolus cuando sean necesarias
 
-  int get currentGlucoseSens => _currentGlucoseSens;
-  int get currentCarbsSens => currentCarbsSens;
+  //valor objetivo de glucosa
+
+  TextEditingController controladorTarget = TextEditingController();
+
+  int _target = 100;
+  int get target => _target;
 
   void receiveTempValues(List<String> valores) {
     //recibir la string de valores
@@ -147,6 +164,51 @@ class SliderProvider with ChangeNotifier {
     for (int i = 0; i < _carbsSensArray.length; i++) {
       print(
           'inicio rango: ${_rangosCarbohidratos[i].start.toString()}. fin rango: ${_rangosCarbohidratos[i].end.toString()}. con sensibilidad: ${_carbsSensArray[i].toString()}');
+    }
+
+    //dejar guardados los valores para que no cambien durante la edicion
+    _rangosGlucosaFinales = List.from(_rangosGlucosa);
+    _rangosCarbohidratosFinales = List.from(_rangosCarbohidratos);
+  }
+
+  int getCurrentCarbsSens(DateTime fecha) {
+    int hour = fecha.hour;
+    int index = -1;
+    for (int i = 0; i < _rangosCarbohidratosFinales.length; i++) {
+      if (hour >= _rangosCarbohidratosFinales[i].start &&
+          hour < _rangosCarbohidratosFinales[i].end) {
+        index = i;
+        break;
+      }
+    }
+
+    return _carbsSensArray[index];
+  }
+
+  int getCurrentGlucoseSens(DateTime fecha) {
+    int hour = fecha.hour;
+    int index = -1;
+    for (int i = 0; i < _rangosGlucosaFinales.length; i++) {
+      if (hour >= _rangosGlucosaFinales[i].start &&
+          hour < _rangosGlucosaFinales[i].end) {
+        index = i;
+        break;
+      }
+    }
+
+    return _glucoseSensArray[index];
+  }
+
+  void saveTarget() {
+    String valor = controladorTarget.text;
+    int? parsedValue = int.tryParse(valor);
+
+    if (parsedValue != null) {
+      // guardar el nuevo target
+      _target = parsedValue;
+    } else {
+      // no guardar el nuevo target
+      print('No se introdujo valor entero correcto');
     }
   }
 }

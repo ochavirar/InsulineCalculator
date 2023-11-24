@@ -56,9 +56,12 @@ class ChangeGlucoseDialog extends StatelessWidget {
             TextButton(
                 onPressed: () {
                   //llamar al provider a que actualice el valor de glucosa con lo que estaba en el textbox
-                  context
-                      .read<BolusProvider>()
-                      .setGlucosa(int.parse(controlador.text));
+                  Provider.of<BolusProvider>(context, listen: false)
+                      .setGlucosa(int.parse(controlador.text), context);
+
+                  // context
+                  //     .read<BolusProvider>()
+                  //     .setGlucosa(int.parse(controlador.text), context);
 
                   Navigator.of(context).pop();
                 },

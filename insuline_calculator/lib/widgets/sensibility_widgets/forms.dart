@@ -43,9 +43,11 @@ class Middle extends StatelessWidget {
             ),
           ),
         ),
-        const TextField(
+        TextField(
+          controller: Provider.of<SliderProvider>(context).controladorTarget,
           decoration: InputDecoration(
-            labelText: 'Ejemplo: 100',
+            labelText:
+                'Valor: ${Provider.of<SliderProvider>(context).target.toString()}',
           ),
         ),
       ],
@@ -102,7 +104,7 @@ class ButtonContainer extends StatelessWidget {
                 .rangoValidoSliders()) {
               //llamar al provider a que haga la funcion de guardar los valores de sensibilidad
               Provider.of<SliderProvider>(context, listen: false).saveNewSens();
-
+              Provider.of<SliderProvider>(context, listen: false).saveTarget();
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
