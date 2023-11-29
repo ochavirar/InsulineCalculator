@@ -8,6 +8,7 @@ import 'package:insuline_calculator/classes/permission_gallery.dart';
 import 'package:insuline_calculator/classes/permission_camera.dart';
 import 'package:insuline_calculator/providers/storage_provider.dart';
 import 'package:insuline_calculator/screens/main_food_list.dart';
+import 'package:insuline_calculator/screens/main_screen.dart';
 import 'package:insuline_calculator/widgets/dynamic_text_field.dart';
 import 'package:insuline_calculator/widgets/register_food_widgets/dropdown_menu.dart';
 
@@ -89,6 +90,9 @@ class _UpdateFoodState extends State<UpdateFood> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: snapshot2.hasError
                                     ? Image.asset('assets/images/not_loaded.jpg',
+                                        height: 150, fit: BoxFit.contain)
+                                    : (_selectedImage != null) ?
+                                        Image.file(_selectedImage!,
                                         height: 150, fit: BoxFit.contain)
                                     : Image.memory(snapshot2.data!,
                                         height: 150, fit: BoxFit.contain)
@@ -238,7 +242,7 @@ class _UpdateFoodState extends State<UpdateFood> {
                                   .editAzFodItem(context);
                               setState(() {
                                 Navigator.pushReplacement(context, 
-                                  MaterialPageRoute(builder: (BuildContext context) => const MainFoodList())
+                                  MaterialPageRoute(builder: (BuildContext context) => const MainScreen())
                                 );
                               });
                             },
