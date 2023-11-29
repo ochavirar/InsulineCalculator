@@ -32,6 +32,7 @@ class MainFoodListItem extends StatelessWidget {
           SlidableAction(
             onPressed: (context) {
               Provider.of<StorageProvider>(context, listen: false).selectedFood = name;
+              Provider.of<StorageProvider>(context, listen: false).setIndex(index);
               Navigator.push(
                   context,
                   MaterialPageRoute(

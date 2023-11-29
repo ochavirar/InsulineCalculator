@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:insuline_calculator/classes/permission_gallery.dart';
 import 'package:insuline_calculator/classes/permission_camera.dart';
 import 'package:insuline_calculator/providers/storage_provider.dart';
-import 'package:insuline_calculator/screens/main_food_list.dart';
 import 'package:insuline_calculator/screens/main_screen.dart';
 import 'package:insuline_calculator/widgets/dynamic_text_field.dart';
 import 'package:insuline_calculator/widgets/register_food_widgets/dropdown_menu.dart';
@@ -66,7 +65,6 @@ class _UpdateFoodState extends State<UpdateFood> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       //Text field generico que acepta el controllador para leer el input
-
                       DynamicTextField(
                         myController:
                             Provider.of<StorageProvider>(context).controllerChangeNombre,

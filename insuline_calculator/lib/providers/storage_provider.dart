@@ -46,6 +46,11 @@ class StorageProvider with ChangeNotifier{
   TextEditingController get controllerChangeCarbs=> _controllerChangeCarbs;
   String get imageToChange => _imageToChange;
   bool wasImageChanged = false;
+  int index = 0;
+
+void setIndex(int newIndex){
+  index = newIndex;
+}
 
 void imageWasChanged(){
   wasImageChanged = true;
@@ -94,15 +99,16 @@ void imageWasChanged(){
   }
 
   void editAzFodItem(BuildContext context) async{
-
       if(wasImageChanged){
-        deleteAzListFoodItem(context, indexToChange, _nameToChange, _imageToChange);
+        deleteAzListFoodItem(context, index, selectedFood, _imageToChange).then((value) => saveEditedFile(context));
       } else {
-        deleteAzListFoodItem(context, indexToChange, _nameToChange, "food/null/not_loaded.jpg");
-      }
-      
+        deleteAzListFoodItem(context, index, selectedFood, "food/null/not_loaded.jpg").then((value) => saveEditedFile(context));
+      }      
+  }
 
-      try{
+  Future<void> saveEditedFile(BuildContext context) async{
+    print("Borrado correctamente");
+    try{
         User user = _auth.currentUser!;
         String mailID = user.email ?? 'error';
         if(selectedImage != null){
@@ -120,7 +126,9 @@ void imageWasChanged(){
           "unidad": selectedUnit,
         };
 
-        String documentName = _controllerNombre.text.replaceAll(RegExp(r'\s+'), '_');
+        print("Changes: $foodFire");
+
+        String documentName = _controllerChangeNombre.text.replaceAll(RegExp(r'\s+'), '_');
         
         _firestore.collection("alimento").doc('${mailID}_$documentName').set(foodFire);
         clearFoodForm();
@@ -186,10 +194,11 @@ void imageWasChanged(){
   }
 
 
-  Future<void> deleteAzListFoodItem(BuildContext context,int index,  String name, String path) async {
+  Future<void> deleteAzListFoodItem(BuildContext context, int index,  String name, String path) async {
     try{
       String documentName = name.replaceAll(RegExp(r'\s+'), '_');
       print("Food to delete: $name");
+      print("Index to delete $index");
       _firestore.collection("alimento")
       .doc('${_auth.currentUser!.email}_$documentName')
       .delete()
