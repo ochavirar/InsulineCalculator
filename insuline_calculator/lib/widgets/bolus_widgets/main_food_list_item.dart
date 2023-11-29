@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:insuline_calculator/providers/storage_provider.dart';
-import 'package:insuline_calculator/screens/register_food.dart';
+import 'package:insuline_calculator/screens/update_food.dart';
 import 'package:provider/provider.dart';
 
 class MainFoodListItem extends StatelessWidget {
@@ -31,11 +31,11 @@ class MainFoodListItem extends StatelessWidget {
         endActionPane: ActionPane(motion: const ScrollMotion(), children: [
           SlidableAction(
             onPressed: (context) {
-              //abrir pagina de edicion de alimento pero con los valores precargados, pasando objeto food de parametro
+              Provider.of<StorageProvider>(context, listen: false).selectedFood = name;
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const RegisterFood()));
+                      builder: (context) => const UpdateFood()));
             },
             backgroundColor: Colors.green,
             foregroundColor: Theme.of(context).secondaryHeaderColor,
@@ -43,6 +43,7 @@ class MainFoodListItem extends StatelessWidget {
           ),
           SlidableAction(
             onPressed: (context) async{
+              Provider.of<StorageProvider>(context).indexToChange = index;
               Provider.of<StorageProvider>(context, listen: false)
                 .deleteAzListFoodItem(context, index, name, path)
                 .then((value) => onPressedCallBack(),);

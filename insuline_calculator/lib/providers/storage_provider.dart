@@ -15,12 +15,21 @@ class StorageProvider with ChangeNotifier{
   final _controllerPorcion= TextEditingController();
   final _controllerCarbs= TextEditingController();
 
+  final _controllerChangeNombre = TextEditingController();
+  final _controllerChangeDescripcion = TextEditingController();
+  final _controllerChangePorcion = TextEditingController();
+  final _controllerChangeCarbs = TextEditingController();
+  String _imageToChange = "";
+  String _nameToChange = "";
+  int indexToChange = 0;
+
   final _firestore = FirebaseFirestore.instance;
   final _storage = FirebaseStorage.instance;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String selectedUnit = "g";
+  String selectedFood = "";
   File? selectedImage;
 
 
@@ -30,7 +39,13 @@ class StorageProvider with ChangeNotifier{
   TextEditingController get controllerPorcion=> _controllerPorcion;
   TextEditingController get controllerCarbs=> _controllerCarbs;
   FirebaseFirestore get firestore => _firestore; 
-  
+
+  TextEditingController get controllerChangeNombre=> _controllerChangeNombre;
+  TextEditingController get controllerChangeDescripcion=> _controllerChangeDescripcion;
+  TextEditingController get controllerChangePorcion=> _controllerChangePorcion;
+  TextEditingController get controllerChangeCarbs=> _controllerChangeCarbs;
+  String get imageToChange => _imageToChange;
+
   //Verificamos que no esten vacíos los campos de texto y guardamos en la base de datos el nuevo alimento
   void saveAzListFood(BuildContext context) async{
 
@@ -73,6 +88,40 @@ class StorageProvider with ChangeNotifier{
     }
   }
 
+  void editAzFodItem(BuildContext context) async{
+
+      deleteAzListFoodItem(context, indexToChange, _nameToChange,_imageToChange);
+
+      try{
+        User user = _auth.currentUser!;
+        String mailID = user.email ?? 'error';
+        if(selectedImage != null){
+          final storageRef = _storage.ref();
+          storageRef.child("food${selectedImage!.path}").putFile(selectedImage!);
+        }
+
+        final foodFire = <String, dynamic>{
+          "carbos": int.parse(_controllerChangeCarbs.text),
+          "descripcion": _controllerChangeDescripcion.text,
+          "email": mailID,
+          "imagen": selectedImage == null? "food/null/not_loaded.jpg" : "food${selectedImage!.path}",
+          "nombre": _controllerChangeNombre.text,
+          "porcion": int.parse(_controllerChangePorcion.text),
+          "unidad": selectedUnit,
+        };
+
+        String documentName = _controllerNombre.text.replaceAll(RegExp(r'\s+'), '_');
+        
+        _firestore.collection("alimento").doc('${mailID}_$documentName').set(foodFire);
+        clearFoodForm();
+        notifyListeners();
+
+      }catch(e){
+        print(e);
+        callErrorSnackbar("Error al editar alimento a la base de datos", context);
+      }
+  }
+
   Future<void> getAzListFood(BuildContext context) async{
 
     var userFood =  await _firestore.collection("alimento")
@@ -93,6 +142,39 @@ class StorageProvider with ChangeNotifier{
     });
 
   }
+
+  Future<void> getAzFood(BuildContext context) async {
+    var userFood = await _firestore.collection("alimento")
+        .where('email', isEqualTo: _auth.currentUser!.email)
+        .where('nombre', isEqualTo: selectedFood)
+        .limit(1) // Add this line to limit the result to one document
+        .get();
+
+    if (userFood.docs.isNotEmpty) {
+      var element = userFood.docs.first;
+      var azfood = {
+        "tag": element["nombre"][0], 
+        "title": element["nombre"],
+        "unit": element["unidad"],
+        "baseServingSize": element["porcion"],
+        "basecarbs": element["carbos"],
+        "description": element["descripcion"],
+        "imageUrl": element["imagen"],
+      };
+      _controllerChangeNombre.value = TextEditingValue(text: azfood['title']);
+      _controllerChangeDescripcion.value = TextEditingValue(text: azfood['description']);
+      _controllerChangePorcion.value = TextEditingValue(text: azfood['baseServingSize'].toString());
+      _controllerChangeCarbs.value = TextEditingValue(text: azfood['basecarbs'].toString());
+      _imageToChange = azfood["imageUrl"];
+      selectedUnit = azfood['unit'];
+      _nameToChange = azfood['title'];
+    } else {
+      // Handle case when no document is found
+      print("No matching document found.");
+    }
+
+  }
+
 
   Future<void> deleteAzListFoodItem(BuildContext context,int index,  String name, String path) async {
     try{
