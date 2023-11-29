@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:insuline_calculator/classes/permission_gallery.dart';
 import 'package:insuline_calculator/classes/permission_camera.dart';
 import 'package:insuline_calculator/providers/storage_provider.dart';
+import 'package:insuline_calculator/screens/main_food_list.dart';
 import 'package:insuline_calculator/widgets/dynamic_text_field.dart';
 import 'package:insuline_calculator/widgets/register_food_widgets/dropdown_menu.dart';
 
@@ -39,6 +40,7 @@ class _UpdateFoodState extends State<UpdateFood> {
     return FutureBuilder<dynamic>(
       future: Provider.of<StorageProvider>(context).getAzFood(context), 
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
+        _selectedImage =  Provider.of<StorageProvider>(context, listen: false).selectedImage;
         if(snapshot.connectionState == ConnectionState.waiting){
           return CircularProgressIndicator();
         } else {
@@ -46,6 +48,7 @@ class _UpdateFoodState extends State<UpdateFood> {
             return Center(child: Text("ERROR"));
           } else {
             //Se asigna a los controllers
+            print(snapshot.data);
             return Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
@@ -76,23 +79,20 @@ class _UpdateFoodState extends State<UpdateFood> {
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: FutureBuilder<Uint8List> (
-                          future: Provider.of<StorageProvider>(context).getFirebaseImage(Provider.of<StorageProvider>(context).imageToChange),
-                          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
-                            if(snapshot.connectionState == ConnectionState.waiting){
+                          future: Provider.of<StorageProvider>(context, listen: false).getFirebaseImage(Provider.of<StorageProvider>(context).imageToChange),
+                          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot2){
+                            if(snapshot2.connectionState == ConnectionState.waiting){
                               return CircularProgressIndicator();
                             } else {
-                              if(snapshot.hasError){
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset('assets/images/not_loaded.jpg',
-                                      height: 150, fit: BoxFit.contain)
-                                  );
-                              }
+                              print(snapshot2.data);
                               return ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.memory(snapshot.data,
-                                      height: 150, fit: BoxFit.contain)
-                                  );
+                                borderRadius: BorderRadius.circular(10),
+                                child: snapshot2.hasError
+                                    ? Image.asset('assets/images/not_loaded.jpg',
+                                        height: 150, fit: BoxFit.contain)
+                                    : Image.memory(snapshot2.data!,
+                                        height: 150, fit: BoxFit.contain)
+                                );
                             }
                           },
                         )
@@ -237,7 +237,9 @@ class _UpdateFoodState extends State<UpdateFood> {
                               Provider.of<StorageProvider>(context, listen: false)
                                   .editAzFodItem(context);
                               setState(() {
-                                _selectedImage = null;
+                                Navigator.pushReplacement(context, 
+                                  MaterialPageRoute(builder: (BuildContext context) => const MainFoodList())
+                                );
                               });
                             },
                             child: const Text('Actualizar',
@@ -279,7 +281,9 @@ class _UpdateFoodState extends State<UpdateFood> {
         Provider.of<StorageProvider>(context, listen: false).selectedImage =
             File(returnedImage.path);
         setState(() {
-          _selectedImage = File(returnedImage.path);
+          Provider.of<StorageProvider>(context, listen: false).imageWasChanged();
+          _selectedImage = null;
+          
         });
       }
     } else {
@@ -326,7 +330,9 @@ class _UpdateFoodState extends State<UpdateFood> {
         Provider.of<StorageProvider>(context, listen: false).selectedImage =
             File(returnedImage.path);
         setState(() {
-          _selectedImage = File(returnedImage.path);
+          _selectedImage = null;
+          Provider.of<StorageProvider>(context, listen: false).imageWasChanged();
+          print("Change");
         });
       }
     } else {

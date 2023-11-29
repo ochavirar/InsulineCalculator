@@ -43,7 +43,7 @@ class MainFoodListItem extends StatelessWidget {
           ),
           SlidableAction(
             onPressed: (context) async{
-              Provider.of<StorageProvider>(context).indexToChange = index;
+              Provider.of<StorageProvider>(context, listen: false).indexToChange = index;
               Provider.of<StorageProvider>(context, listen: false)
                 .deleteAzListFoodItem(context, index, name, path)
                 .then((value) => onPressedCallBack(),);
@@ -64,13 +64,14 @@ class MainFoodListItem extends StatelessWidget {
                   future: Provider.of<StorageProvider>(context, listen: false).getFirebaseImage(item.imageUrl),
                   builder: (context, snapshot){
                     if(snapshot.connectionState == ConnectionState.waiting){
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }
                     else if (snapshot.hasError) {
                       // Show an error message if the future completes with an error
                       return Image.asset("assets/images/not_loaded.jpg", width: 63, height: 63);
                     }
                     else{
+                      //print(snapshot.data);
                       return Image.memory(snapshot.data!, width: 63, height: 63);
                     }
                   }

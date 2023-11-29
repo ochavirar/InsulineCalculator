@@ -45,6 +45,11 @@ class StorageProvider with ChangeNotifier{
   TextEditingController get controllerChangePorcion=> _controllerChangePorcion;
   TextEditingController get controllerChangeCarbs=> _controllerChangeCarbs;
   String get imageToChange => _imageToChange;
+  bool wasImageChanged = false;
+
+void imageWasChanged(){
+  wasImageChanged = true;
+}
 
   //Verificamos que no esten vacíos los campos de texto y guardamos en la base de datos el nuevo alimento
   void saveAzListFood(BuildContext context) async{
@@ -90,7 +95,12 @@ class StorageProvider with ChangeNotifier{
 
   void editAzFodItem(BuildContext context) async{
 
-      deleteAzListFoodItem(context, indexToChange, _nameToChange,_imageToChange);
+      if(wasImageChanged){
+        deleteAzListFoodItem(context, indexToChange, _nameToChange, _imageToChange);
+      } else {
+        deleteAzListFoodItem(context, indexToChange, _nameToChange, "food/null/not_loaded.jpg");
+      }
+      
 
       try{
         User user = _auth.currentUser!;
@@ -104,7 +114,7 @@ class StorageProvider with ChangeNotifier{
           "carbos": int.parse(_controllerChangeCarbs.text),
           "descripcion": _controllerChangeDescripcion.text,
           "email": mailID,
-          "imagen": selectedImage == null? "food/null/not_loaded.jpg" : "food${selectedImage!.path}",
+          "imagen": selectedImage == null && !wasImageChanged? _imageToChange : (selectedImage != null) ? "food${selectedImage!.path}" : "food/null/not_loaded.jpg",
           "nombre": _controllerChangeNombre.text,
           "porcion": int.parse(_controllerChangePorcion.text),
           "unidad": selectedUnit,
@@ -167,7 +177,7 @@ class StorageProvider with ChangeNotifier{
       _controllerChangeCarbs.value = TextEditingValue(text: azfood['basecarbs'].toString());
       _imageToChange = azfood["imageUrl"];
       selectedUnit = azfood['unit'];
-      _nameToChange = azfood['title'];
+      wasImageChanged = false;
     } else {
       // Handle case when no document is found
       print("No matching document found.");
@@ -179,15 +189,16 @@ class StorageProvider with ChangeNotifier{
   Future<void> deleteAzListFoodItem(BuildContext context,int index,  String name, String path) async {
     try{
       String documentName = name.replaceAll(RegExp(r'\s+'), '_');
+      print("Food to delete: $name");
       _firestore.collection("alimento")
       .doc('${_auth.currentUser!.email}_$documentName')
       .delete()
       .then((value) async {
-        print(path);
+        print('Path for image to delete: $path');
         if(path != 'food/null/not_loaded.jpg'){
-          final storageRef = _storage.refFromURL('gs://calculadorainsulina.appspot.com');
-          var imageRef = storageRef.child(path);
-          await imageRef.delete();
+            final storageRef = _storage.refFromURL('gs://calculadorainsulina.appspot.com');
+            var imageRef = storageRef.child(path);
+            await imageRef.delete();
         }
         _listFood.removeWhere((obj) => obj.title == name);
       });
@@ -202,7 +213,12 @@ class StorageProvider with ChangeNotifier{
     var imageRef = storageRef.child(path);
     const res = 1024 * 1024;
     print(imageRef);
-    Uint8List? data = await imageRef.getData(res);
+    Uint8List? data;
+    try{
+      data = await imageRef.getData(res);
+    } catch(e){
+      print("Exception has occured");
+    }
     if (data == null){
       var imageRef = storageRef.child("food/null/not_loaded.jpg");
       data = await imageRef.getData(res);
