@@ -29,8 +29,7 @@ class BolusProvider with ChangeNotifier {
 
   Map<String, List<FullBolus>> cleanMap = {};
   Map<String, List<BolusHistoryItem>> historyMap = {};
-  List<Map<String, dynamic>> userBolus = [];  
-  
+  List<Map<String, dynamic>> userBolus = [];
 
   void getCarbSum() {
     _carbSum = 0;
@@ -140,42 +139,47 @@ class BolusProvider with ChangeNotifier {
   }
 
   // Crear mapa para usar en calendario historial y gráfica de reportes
-  Future<Map<String, List<FullBolus>>> createCleanMap() async{
+  Future<Map<String, List<FullBolus>>> createCleanMap() async {
     Map<String, List<FullBolus>> cleanMap = {};
     await getBolus();
-    for(int i = 0; i<_listBolus.length; i++){
+    for (int i = 0; i < _listBolus.length; i++) {
       String strDate = _listBolus[i].time.toString();
-      String dateSliced = strDate.split(' ')[0]; 
-      if(!cleanMap.containsKey(dateSliced)){ // La llave es solo la parte de la fecha en string para el mapa, si no está crearla
+      String dateSliced = strDate.split(' ')[0];
+      if (!cleanMap.containsKey(dateSliced)) {
+        // La llave es solo la parte de la fecha en string para el mapa, si no está crearla
         cleanMap[dateSliced] = [_listBolus[i]];
-      } 
-      else{
+      } else {
         cleanMap[dateSliced]?.add(_listBolus[i]);
       }
     }
     return cleanMap;
   }
 
-
-  
-  Future<void> getBolus() async{
+  Future<void> getBolus() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser!;
     String mailID = user.email ?? 'error';
 
-    var userBolus =  await FirebaseFirestore.instance
-    .collection("bolus")
-    .where('email', isEqualTo: mailID)
-    .get();
+    var userBolus = await FirebaseFirestore.instance
+        .collection("bolus")
+        .where('email', isEqualTo: mailID)
+        .get();
     _listBolus = [];
     _listHistoryBolus = [];
 
     userBolus.docs.forEach((element) {
+      List<String> tempList = [];
+      for (int i = 0; i < element["lista_alimentos"].length; i++) {
+        tempList.add(element['lista_alimentos'][i] +
+            ' ' +
+            element['lista_cantidades'][i].toString() +
+            element['lista_unidades'][i]);
+      }
+
       var currentBolus = FullBolus(
-        
         time: element["fecha"].toDate(),
         unitsFood: element["unidades_alimento"].toDouble(),
-        listFood: ["placeholder 20ml","placeholder 30g","placeholder 10ml"], //TODO crear la lista de strings segun los alimentos que hay
+        listFood: tempList,
         unitsGlucose: element["unidades_glucosa"].toDouble(),
         glucoseLevel: element["nivel_glucosa"].toDouble(),
         carbs: element["carbs"].toDouble(),
@@ -184,7 +188,7 @@ class BolusProvider with ChangeNotifier {
       var historyBolus = BolusHistoryItem(
         time: element["fecha"].toDate(),
         unitsFood: element["unidades_alimento"].toDouble(),
-        listFood: ["placeholder 20ml","placeholder 30g","placeholder 10ml"], //TODO crear la lista de strings segun los alimentos que hay
+        listFood: tempList,
         unitsGlucose: element["unidades_glucosa"].toDouble(),
         glucoseLevel: element["nivel_glucosa"].toDouble(),
         carbs: element["carbs"].toDouble(),
@@ -192,30 +196,23 @@ class BolusProvider with ChangeNotifier {
 
       _listBolus.add(currentBolus);
       _listHistoryBolus.add(historyBolus);
-      
     });
-
   }
 
-
-    // Crear mapa para usar en calendario historial y gráfica de reportes
-  Future<void> createHistoryMap() async{
+  // Crear mapa para usar en calendario historial y gráfica de reportes
+  Future<void> createHistoryMap() async {
     Map<String, List<BolusHistoryItem>> cleanMap = {};
     await getBolus();
-    for(int i = 0; i<_listHistoryBolus.length; i++){
+    for (int i = 0; i < _listHistoryBolus.length; i++) {
       String strDate = _listHistoryBolus[i].time.toString();
-      String dateSliced = strDate.split(' ')[0]; 
-      if(!cleanMap.containsKey(dateSliced)){ // La llave es solo la parte de la fecha en string para el mapa, si no está crearla
+      String dateSliced = strDate.split(' ')[0];
+      if (!cleanMap.containsKey(dateSliced)) {
+        // La llave es solo la parte de la fecha en string para el mapa, si no está crearla
         cleanMap[dateSliced] = [_listHistoryBolus[i]];
-      } 
-      else{
+      } else {
         cleanMap[dateSliced]?.add(_listHistoryBolus[i]);
       }
     }
     historyMap = cleanMap;
   }
-
-
-  
-
 }
