@@ -1,6 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:insuline_calculator/classes/food.dart';
+import 'package:insuline_calculator/providers/storage_provider.dart';
+import 'package:provider/provider.dart';
 import 'change_food_dialog.dart';
 
 class FoodListItem extends StatelessWidget {
@@ -36,12 +40,22 @@ class FoodListItem extends StatelessWidget {
             // Network Image
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: Image.network(
-                item.imageUrl,
-                width: 80, //ajustable
-                height: 80, //toda la height
-                //fit: BoxFit.cover,
-              ),
+              child: FutureBuilder<Uint8List> (
+                  future: Provider.of<StorageProvider>(context, listen: false).getFirebaseImage(item.imageUrl),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return const CircularProgressIndicator();
+                    }
+                    else if (snapshot.hasError) {
+                      // Show an error message if the future completes with an error
+                      return Image.asset("assets/images/not_loaded.jpg", width: 63, height: 63);
+                    }
+                    else{
+                      //print(snapshot.data);
+                      return Image.memory(snapshot.data!, width: 63, height: 63);
+                    }
+                  }
+                )
             ),
             Column(
               children: [

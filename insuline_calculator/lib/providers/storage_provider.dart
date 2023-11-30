@@ -15,12 +15,21 @@ class StorageProvider with ChangeNotifier{
   final _controllerPorcion= TextEditingController();
   final _controllerCarbs= TextEditingController();
 
+  final _controllerChangeNombre = TextEditingController();
+  final _controllerChangeDescripcion = TextEditingController();
+  final _controllerChangePorcion = TextEditingController();
+  final _controllerChangeCarbs = TextEditingController();
+  String _imageToChange = "";
+  String _nameToChange = "";
+  int indexToChange = 0;
+
   final _firestore = FirebaseFirestore.instance;
   final _storage = FirebaseStorage.instance;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String selectedUnit = "g";
+  String selectedFood = "";
   File? selectedImage;
 
 
@@ -30,7 +39,23 @@ class StorageProvider with ChangeNotifier{
   TextEditingController get controllerPorcion=> _controllerPorcion;
   TextEditingController get controllerCarbs=> _controllerCarbs;
   FirebaseFirestore get firestore => _firestore; 
-  
+
+  TextEditingController get controllerChangeNombre=> _controllerChangeNombre;
+  TextEditingController get controllerChangeDescripcion=> _controllerChangeDescripcion;
+  TextEditingController get controllerChangePorcion=> _controllerChangePorcion;
+  TextEditingController get controllerChangeCarbs=> _controllerChangeCarbs;
+  String get imageToChange => _imageToChange;
+  bool wasImageChanged = false;
+  int index = 0;
+
+void setIndex(int newIndex){
+  index = newIndex;
+}
+
+void imageWasChanged(){
+  wasImageChanged = true;
+}
+
   //Verificamos que no esten vacíos los campos de texto y guardamos en la base de datos el nuevo alimento
   void saveAzListFood(BuildContext context) async{
 
@@ -73,6 +98,48 @@ class StorageProvider with ChangeNotifier{
     }
   }
 
+  void editAzFodItem(BuildContext context) async{
+      if(wasImageChanged){
+        deleteAzListFoodItem(context, index, selectedFood, _imageToChange).then((value) => saveEditedFile(context));
+      } else {
+        deleteAzListFoodItem(context, index, selectedFood, "food/null/not_loaded.jpg").then((value) => saveEditedFile(context));
+      }      
+  }
+
+  Future<void> saveEditedFile(BuildContext context) async{
+    print("Borrado correctamente");
+    try{
+        User user = _auth.currentUser!;
+        String mailID = user.email ?? 'error';
+        if(selectedImage != null){
+          final storageRef = _storage.ref();
+          storageRef.child("food${selectedImage!.path}").putFile(selectedImage!);
+        }
+
+        final foodFire = <String, dynamic>{
+          "carbos": int.parse(_controllerChangeCarbs.text),
+          "descripcion": _controllerChangeDescripcion.text,
+          "email": mailID,
+          "imagen": selectedImage == null && !wasImageChanged? _imageToChange : (selectedImage != null) ? "food${selectedImage!.path}" : "food/null/not_loaded.jpg",
+          "nombre": _controllerChangeNombre.text,
+          "porcion": int.parse(_controllerChangePorcion.text),
+          "unidad": selectedUnit,
+        };
+
+        print("Changes: $foodFire");
+
+        String documentName = _controllerChangeNombre.text.replaceAll(RegExp(r'\s+'), '_');
+        
+        _firestore.collection("alimento").doc('${mailID}_$documentName').set(foodFire);
+        clearFoodForm();
+        notifyListeners();
+
+      }catch(e){
+        print(e);
+        callErrorSnackbar("Error al editar alimento a la base de datos", context);
+      }
+  }
+
   Future<void> getAzListFood(BuildContext context) async{
 
     var userFood =  await _firestore.collection("alimento")
@@ -94,18 +161,53 @@ class StorageProvider with ChangeNotifier{
 
   }
 
-  Future<void> deleteAzListFoodItem(BuildContext context,int index,  String name, String path) async {
+  Future<void> getAzFood(BuildContext context) async {
+    var userFood = await _firestore.collection("alimento")
+        .where('email', isEqualTo: _auth.currentUser!.email)
+        .where('nombre', isEqualTo: selectedFood)
+        .limit(1) // Add this line to limit the result to one document
+        .get();
+
+    if (userFood.docs.isNotEmpty) {
+      var element = userFood.docs.first;
+      var azfood = {
+        "tag": element["nombre"][0], 
+        "title": element["nombre"],
+        "unit": element["unidad"],
+        "baseServingSize": element["porcion"],
+        "basecarbs": element["carbos"],
+        "description": element["descripcion"],
+        "imageUrl": element["imagen"],
+      };
+      _controllerChangeNombre.value = TextEditingValue(text: azfood['title']);
+      _controllerChangeDescripcion.value = TextEditingValue(text: azfood['description']);
+      _controllerChangePorcion.value = TextEditingValue(text: azfood['baseServingSize'].toString());
+      _controllerChangeCarbs.value = TextEditingValue(text: azfood['basecarbs'].toString());
+      _imageToChange = azfood["imageUrl"];
+      selectedUnit = azfood['unit'];
+      wasImageChanged = false;
+    } else {
+      // Handle case when no document is found
+      print("No matching document found.");
+    }
+
+  }
+
+
+  Future<void> deleteAzListFoodItem(BuildContext context, int index,  String name, String path) async {
     try{
       String documentName = name.replaceAll(RegExp(r'\s+'), '_');
+      print("Food to delete: $name");
+      print("Index to delete $index");
       _firestore.collection("alimento")
       .doc('${_auth.currentUser!.email}_$documentName')
       .delete()
       .then((value) async {
-        print(path);
+        print('Path for image to delete: $path');
         if(path != 'food/null/not_loaded.jpg'){
-          final storageRef = _storage.refFromURL('gs://calculadorainsulina.appspot.com');
-          var imageRef = storageRef.child(path);
-          await imageRef.delete();
+            final storageRef = _storage.refFromURL('gs://calculadorainsulina.appspot.com');
+            var imageRef = storageRef.child(path);
+            await imageRef.delete();
         }
         _listFood.removeWhere((obj) => obj.title == name);
       });
@@ -120,7 +222,12 @@ class StorageProvider with ChangeNotifier{
     var imageRef = storageRef.child(path);
     const res = 1024 * 1024;
     print(imageRef);
-    Uint8List? data = await imageRef.getData(res);
+    Uint8List? data;
+    try{
+      data = await imageRef.getData(res);
+    } catch(e){
+      print("Exception has occured");
+    }
     if (data == null){
       var imageRef = storageRef.child("food/null/not_loaded.jpg");
       data = await imageRef.getData(res);

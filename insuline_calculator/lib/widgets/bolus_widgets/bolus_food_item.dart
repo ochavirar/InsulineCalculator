@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:insuline_calculator/providers/storage_provider.dart';
 import 'change_food_dialog.dart';
 import 'package:insuline_calculator/classes/food_detail.dart';
 import 'package:provider/provider.dart';
@@ -58,11 +61,22 @@ class _BolusFoodItemState extends State<BolusFoodItem> {
               padding: EdgeInsets.only(left: 6, right: 20, top: 5, bottom: 5),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Image(
-                  image: NetworkImage(widget.detalle.alimento.imageUrl),
-                  height: 63,
-                  width: 63,
-                ),
+                child: FutureBuilder<Uint8List> (
+                  future: Provider.of<StorageProvider>(context, listen: false).getFirebaseImage(widget.detalle.alimento.imageUrl),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return const CircularProgressIndicator();
+                    }
+                    else if (snapshot.hasError) {
+                      // Show an error message if the future completes with an error
+                      return Image.asset("assets/images/not_loaded.jpg", width: 63, height: 63);
+                    }
+                    else{
+                      //print(snapshot.data);
+                      return Image.memory(snapshot.data!, width: 63, height: 63);
+                    }
+                  }
+                )
               ),
             ),
             Column(

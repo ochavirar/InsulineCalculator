@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:insuline_calculator/providers/storage_provider.dart';
 import 'package:insuline_calculator/widgets/dynamic_text_field.dart';
 import 'package:insuline_calculator/classes/food.dart';
 
@@ -43,13 +46,22 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
             margin: EdgeInsets.only(top: 10, bottom: 30),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image(
-                image: NetworkImage(
-                  widget.food.imageUrl,
-                ),
-                height: 200,
-                width: 200,
-              ),
+              child: FutureBuilder<Uint8List> (
+                  future: Provider.of<StorageProvider>(context, listen: false).getFirebaseImage(widget.food.imageUrl),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return const CircularProgressIndicator();
+                    }
+                    else if (snapshot.hasError) {
+                      // Show an error message if the future completes with an error
+                      return Image.asset("assets/images/not_loaded.jpg", width: 63, height: 63);
+                    }
+                    else{
+                      //print(snapshot.data);
+                      return Image.memory(snapshot.data!, width: 80, height: 80);
+                    }
+                  }
+                )
             ),
           ),
           Row(

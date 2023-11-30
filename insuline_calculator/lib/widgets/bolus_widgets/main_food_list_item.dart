@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:insuline_calculator/providers/storage_provider.dart';
-import 'package:insuline_calculator/screens/register_food.dart';
+import 'package:insuline_calculator/screens/update_food.dart';
 import 'package:provider/provider.dart';
 
 class MainFoodListItem extends StatelessWidget {
@@ -31,11 +31,12 @@ class MainFoodListItem extends StatelessWidget {
         endActionPane: ActionPane(motion: const ScrollMotion(), children: [
           SlidableAction(
             onPressed: (context) {
-              //abrir pagina de edicion de alimento pero con los valores precargados, pasando objeto food de parametro
+              Provider.of<StorageProvider>(context, listen: false).selectedFood = name;
+              Provider.of<StorageProvider>(context, listen: false).setIndex(index);
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const RegisterFood()));
+                      builder: (context) => const UpdateFood()));
             },
             backgroundColor: Colors.green,
             foregroundColor: Theme.of(context).secondaryHeaderColor,
@@ -43,6 +44,7 @@ class MainFoodListItem extends StatelessWidget {
           ),
           SlidableAction(
             onPressed: (context) async{
+              Provider.of<StorageProvider>(context, listen: false).indexToChange = index;
               Provider.of<StorageProvider>(context, listen: false)
                 .deleteAzListFoodItem(context, index, name, path)
                 .then((value) => onPressedCallBack(),);
@@ -63,13 +65,14 @@ class MainFoodListItem extends StatelessWidget {
                   future: Provider.of<StorageProvider>(context, listen: false).getFirebaseImage(item.imageUrl),
                   builder: (context, snapshot){
                     if(snapshot.connectionState == ConnectionState.waiting){
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }
                     else if (snapshot.hasError) {
                       // Show an error message if the future completes with an error
                       return Image.asset("assets/images/not_loaded.jpg", width: 63, height: 63);
                     }
                     else{
+                      //print(snapshot.data);
                       return Image.memory(snapshot.data!, width: 63, height: 63);
                     }
                   }
