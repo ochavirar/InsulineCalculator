@@ -56,7 +56,7 @@ class BolusHistoryItem extends StatelessWidget {
                   const SizedBox(width: 20),
                   Text(formattedTime,style:TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                   Expanded(child: Container()),
-                  Text("$unitsTotal U", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                  Text("${unitsTotal.toStringAsFixed(2)} U", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
                   const SizedBox(width: 25),
                 ],
               ),
@@ -65,7 +65,7 @@ class BolusHistoryItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 const SizedBox(width: 20),
-                Text("Glucosa: $glucoseLevel mg/dl", style:TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+                Text("Glucosa: ${(glucoseLevel.toStringAsFixed(2))} mg/dl", style:TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
                 Expanded(child: Container(),),
                 TextButton(
                   child: const Text('ABRIR'),
