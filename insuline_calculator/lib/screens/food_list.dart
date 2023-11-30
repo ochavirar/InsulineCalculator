@@ -3,7 +3,9 @@ import 'package:azlistview/azlistview.dart';
 import 'package:insuline_calculator/classes/food.dart';
 import 'package:insuline_calculator/classes/az_food_list.dart';
 import 'package:insuline_calculator/dummy_data/dummy_data.dart';
+import 'package:insuline_calculator/providers/storage_provider.dart';
 import 'package:insuline_calculator/widgets/bolus_widgets/food_list_item.dart';
+import 'package:provider/provider.dart';
 
 class FoodList extends StatefulWidget {
   const FoodList({super.key});
@@ -44,12 +46,42 @@ class _FoodListState extends State<FoodList> {
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: AzListView(
-          data: items,
-          itemCount: dummyFood.length,
-          itemBuilder: (BuildContext context, int index) {
-            return FoodListItem(item: items[index]);
-          }),
+      body: FutureBuilder(
+        future: Provider.of<StorageProvider>(context).getAzListFood(context),
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator()
+                ],)
+                ]
+            );
+          }
+          else if(snapshot.hasError){
+            return Column(
+              children: [
+                Text("No hay alimentos guardados", style: TextStyle(fontSize: 18))
+              ]);
+          }
+          else{
+            items = Provider.of<StorageProvider>(context).listFood;
+            return 
+            AzListView(
+              data: items,
+              itemCount: dummyFood.length,
+              itemBuilder: (BuildContext context, int index) {
+              return FoodListItem(item: items[index]);
+            });
+          }
+
+        }
+        
+        
+      ),
     );
   }
 }
