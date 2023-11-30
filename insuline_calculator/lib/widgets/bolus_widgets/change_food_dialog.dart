@@ -54,7 +54,7 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
                     }
                     else if (snapshot.hasError) {
                       // Show an error message if the future completes with an error
-                      return Image.asset("assets/images/not_loaded.jpg", width: 63, height: 63);
+                      return Image.asset("assets/images/not_loaded.jpg", width: 80, height: 80);
                     }
                     else{
                       //print(snapshot.data);

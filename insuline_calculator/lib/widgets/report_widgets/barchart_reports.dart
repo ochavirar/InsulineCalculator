@@ -44,12 +44,17 @@ class BarChartReportes extends StatelessWidget {
                         ]);
                   }),
                   barTouchData: BarTouchData(
-                      enabled: true,
-                      handleBuiltInTouches: true,
-                      touchTooltipData: BarTouchTooltipData(
-                          fitInsideVertically: false,
-                          tooltipBgColor:
-                              Theme.of(context).secondaryHeaderColor)),
+                    enabled: true,
+                    handleBuiltInTouches: true,
+                    touchTooltipData: BarTouchTooltipData(fitInsideVertically: false, 
+                      tooltipBgColor: Theme.of(context).secondaryHeaderColor,
+                      getTooltipItem: (group,groupIndex,rod,rodIndex){
+                        String tooltipValue = rod.toY.toStringAsFixed(2);
+                        return BarTooltipItem(tooltipValue, TextStyle(color: Colors.blue, fontWeight: FontWeight.bold));
+                      }  
+                    )
+                  ),
+                              
                 ),
               ),
             ),

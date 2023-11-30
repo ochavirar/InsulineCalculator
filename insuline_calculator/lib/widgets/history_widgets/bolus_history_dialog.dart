@@ -17,7 +17,7 @@ class BolusHistoryDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.fromLTRB(20,15,20,7),
+      contentPadding: EdgeInsets.fromLTRB(10,15,10,7),
       actionsPadding: EdgeInsets.fromLTRB(0,8,0,15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Container(
@@ -42,7 +42,7 @@ class BolusHistoryDialog extends StatelessWidget {
                   Row(children: [
                     Text(dateFormat.format(bolus.time),style:TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                     Expanded(child: Container()),
-                    Text("${bolus.unitsFood+bolus.unitsGlucose} U", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                    Text("${(bolus.unitsFood+bolus.unitsGlucose).toStringAsFixed(2)} U", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
                   ]),
 
                   Divider(thickness: 3, height: 30, color: Theme.of(context).primaryColor),
@@ -63,7 +63,7 @@ class BolusHistoryDialog extends StatelessWidget {
                         )).toList(),),
                     ),
                     Expanded(child: Container()),
-                    Text("${bolus.unitsFood} U", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                    Text("${(bolus.unitsFood).toStringAsFixed(2)} U", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
                   ]),
 
 
@@ -71,9 +71,9 @@ class BolusHistoryDialog extends StatelessWidget {
                   Row(children: [
                     Text("Glucosa:",style:TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                     Expanded(child: Container()),
-                    Text("${bolus.glucoseLevel} mg/dl", style:TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+                    Text("${(bolus.glucoseLevel).toStringAsFixed(2)} mg/dl", style:TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
                     Expanded(child: Container()),
-                    Text("${bolus.unitsGlucose} U", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w400))
+                    Text("${(bolus.unitsGlucose).toStringAsFixed(2)} U", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w400))
                   ]),
 
               ]),
