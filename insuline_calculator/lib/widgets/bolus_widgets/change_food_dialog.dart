@@ -111,10 +111,15 @@ class _EditFoodDialogState extends State<EditFoodDialog> {
                     // context.read<BolusProvider>().changeFood(
                     //     widget.food, double.parse(controlador.text), context);
                   } else {
+                    try{
                     Provider.of<BolusProvider>(context, listen: false).addFood(
                         widget.food, double.parse(controlador.text), context);
                     // context.read<BolusProvider>().addFood(
                     //     widget.food, double.parse(controlador.text), context);
+                    }catch(e){
+                      Provider.of<StorageProvider>(context,listen: false).callErrorSnackbar("Debes configurar la sensibilidad antes de ingresar un bolus",
+                      context);
+                    }
                   }
 
                   Navigator.of(context).pop();

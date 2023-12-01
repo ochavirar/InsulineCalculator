@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:insuline_calculator/classes/food.dart';
@@ -72,7 +74,7 @@ class _FoodListState extends State<FoodList> {
             return 
             AzListView(
               data: items,
-              itemCount: dummyFood.length,
+              itemCount: items.length,
               itemBuilder: (BuildContext context, int index) {
               return FoodListItem(item: items[index]);
             });

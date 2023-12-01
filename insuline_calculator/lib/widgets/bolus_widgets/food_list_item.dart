@@ -23,7 +23,6 @@ class FoodListItem extends StatelessWidget {
           showDialog(
               context: context,
               builder: (BuildContext context) {
-                //falta convertir el AZ a un food normal denuevo para pasarlo de parametro a editFood
                 Food foodItem = Food(
                     title: item.title,
                     unit: item.unit,

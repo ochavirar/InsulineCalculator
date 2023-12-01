@@ -18,8 +18,18 @@ class SensibilityContainer extends StatelessWidget {
       drawer: const SideBar(),
       body: ListView(
         children:  const [
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text("Ingresa la sensibilidad a la glucosa y carbohidratos que tienes a lo largo de un día con los sliders ",
+            style: TextStyle(fontSize: 16),)
+          ),
           RangeSliderCategory(title: "Glucosa", id: 0),
           RangeSliderCategory(title: "Carbohidratos", id: 1),
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text("Ingresa tu rango aceptable de glucosa",
+            style: TextStyle(fontSize: 16),)
+          ),
           RangeSliderObjective(title: "Rango buscado"	),
           Objective()
         ],
