@@ -18,8 +18,9 @@ class LogInTerms extends StatelessWidget {
             TextSpan(
               text: "Terminos y Condiciones ", 
               style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).primaryColor,
+                fontSize: 15,
+                color: Theme.of(context).colorScheme.tertiary,
+                fontWeight: FontWeight.bold
               ),
               recognizer: TapGestureRecognizer()..onTap = (){
                 //Abrir dialogo de terminos y condiciones
@@ -32,18 +33,18 @@ class LogInTerms extends StatelessWidget {
             TextSpan(
               text: "Aviso de Privacidad",
               style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).primaryColor,
+                fontSize: 15,
+                color: Theme.of(context).colorScheme.tertiary,
+                fontWeight: FontWeight.bold
               ),
               recognizer: TapGestureRecognizer()..onTap = (){
-                //Abrir dialogo de aviso de privacidad
+                //Abrir dialogo de aviso de privacidadS
                 showDialog(context: context, builder: (context){
                   return PolicyDialog(mdFileName:  'aviso_privacidad.md');
                 });
               }
             )
           ]
-        
         )
       ),
     );

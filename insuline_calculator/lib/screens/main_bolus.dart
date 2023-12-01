@@ -13,16 +13,9 @@ class MainBolusScreen extends StatefulWidget {
 class _MainBolusScreenState extends State<MainBolusScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    //llamar a la funcion que va a resetear los valores a 0 y va a traer la sensibilidad de la hora que es
-    resetAndGetSens();
   }
 
-  void resetAndGetSens() {
-    //TO DO ---------------
-  }
 
   int _selectedPage = 0;
 

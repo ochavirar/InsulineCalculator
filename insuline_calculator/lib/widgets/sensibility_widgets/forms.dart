@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:insuline_calculator/providers/sliders_provider.dart';
 import 'package:insuline_calculator/screens/main_screen.dart';
@@ -31,6 +33,11 @@ class Middle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text("Ingresa el nivel objetivo de glucosa que buscas tener",
+            style: TextStyle(fontSize: 16),)
+          ),
         Align(
           alignment: Alignment.topLeft,
           child: Padding(
